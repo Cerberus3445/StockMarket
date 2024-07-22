@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="user-service" />
         <module name="stock-market" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,7 @@
       <module name="demo-trading" options="-parameters" />
       <module name="stock-market" options="-parameters" />
       <module name="stock-market (2)" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>
