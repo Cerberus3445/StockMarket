@@ -2,12 +2,14 @@ package com.cerberus.stockmarket.client.impl;
 
 import com.cerberus.stockmarket.client.StockClient;
 import com.cerberus.stockmarket.dto.StockPriceDto;
+import com.cerberus.stockmarket.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -20,6 +22,8 @@ public class StockClientImpl implements StockClient {
     private String token;
 
     private final Logger logger = LoggerFactory.getLogger(StockClientImpl.class);
+
+    private final StockService stockService;
 
     private final WebClient webClient = WebClient.builder()
             .baseUrl("https://finnhub.io/api/v1")
@@ -37,6 +41,13 @@ public class StockClientImpl implements StockClient {
         return this.webClient.get()
                 .uri(uriBuilder -> uriBuilder.path(path).query(query).build(map))
                 .retrieve()
-                .bodyToMono(StockPriceDto.class);
+                .bodyToMono(StockPriceDto.class)
+                .doOnNext(stockPriceDto -> stockPriceDto.setTicker(ticker));
+    }
+
+    @Override
+    public Flux<StockPriceDto> getPriceWithPagination(Integer page, Integer size) {
+        return this.stockService.getWithPagination(page, size)
+                .flatMap(stockDto -> getPrice(stockDto.ticker()));
     }
 }

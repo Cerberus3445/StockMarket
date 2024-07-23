@@ -3,6 +3,7 @@ package com.cerberus.userservice.service.impl;
 import com.cerberus.userservice.dto.UserDto;
 import com.cerberus.userservice.exception.ApplicationExceptions;
 import com.cerberus.userservice.mapper.UserMapper;
+import com.cerberus.userservice.model.Role;
 import com.cerberus.userservice.repository.UserRepository;
 import com.cerberus.userservice.service.UserService;
 import com.cerberus.userservice.validator.RequestValidator;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
     public Mono<UserDto> create(Mono<UserDto> dtoMono) {
         return dtoMono.transform(RequestValidator.validate())
                 .map(UserMapper::toEntity)
+                .doOnNext(user -> user.setRole(Role.ROLE_USER))
                 .flatMap(this.userRepository::save)
                 .map(UserMapper::toDto);
     }

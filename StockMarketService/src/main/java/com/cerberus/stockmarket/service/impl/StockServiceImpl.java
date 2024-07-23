@@ -26,6 +26,7 @@ public class StockServiceImpl implements StockService {
     public Mono<StockDto> getByTicker(String ticker){
         log.info("getByTicker {}", ticker);
         return this.stockRepository.findByTicker(ticker)
+                .switchIfEmpty(ApplicationExceptions.stockNotFound(ticker))
                 .map(StockMapper::toDto);
     }
 
@@ -56,8 +57,8 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Flux<StockDto> getByPage(Integer page, Integer size) {
-        log.info("getByPage page: {}, size: {}", page, size);
+    public Flux<StockDto> getWithPagination(Integer page, Integer size) {
+        log.info("getWithPagination page: {}, size: {}", page, size);
         return this.stockRepository.findBy(PageRequest.of(page - 1 , size))
                 .map(StockMapper::toDto);
     }

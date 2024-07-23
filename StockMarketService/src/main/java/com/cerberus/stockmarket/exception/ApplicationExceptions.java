@@ -9,6 +9,10 @@ public class ApplicationExceptions {
         return Mono.error(new StockNotFoundException(id));
     }
 
+    public static <T>Mono<T> stockNotFound(String ticker){
+        return Mono.error(new StockNotFoundException(ticker));
+    }
+
     public static <T>Mono<T> stockValidationName(){
         return Mono.error(new StockValidationException("Название акции не должно быть пустным"));
     }

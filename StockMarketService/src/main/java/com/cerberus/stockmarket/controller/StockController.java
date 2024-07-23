@@ -15,7 +15,7 @@ import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/stocks")
+@RequestMapping("/api/v1/stocks")
 public class StockController {
 
     private final StockService stockService;
@@ -32,13 +32,18 @@ public class StockController {
         return this.stockService.create(stockDtoMono);
     }
 
+    @GetMapping("/price/page/{page}/size/{size}")
+    public Flux<StockPriceDto> getWithPagination(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
+        return this.stockClient.getPriceWithPagination(page, size);
+    }
+
     @GetMapping("/{id}")
     public Mono<StockDto> getById(@PathVariable("id") Integer id){
         return this.stockService.getById(id);
     }
 
-    @GetMapping("/ticker")
-    public Mono<StockDto> getByTicker(@RequestParam("ticker") String ticker){
+    @GetMapping("/ticker/{ticker}")
+    public Mono<StockDto> getByTicker(@PathVariable("ticker") String ticker){
         return this.stockService.getByTicker(ticker);
     }
 

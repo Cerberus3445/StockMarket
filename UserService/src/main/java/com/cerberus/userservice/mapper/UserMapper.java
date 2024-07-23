@@ -9,15 +9,17 @@ public class UserMapper {
         return new UserDto(
                 user.getId(),
                 user.getName(),
-                user.getEmail()
+                user.getEmail(),
+                user.getRole()
         );
     }
 
     public static User toEntity(UserDto userDto){
         User user = new User();
-        user.setId(userDto.id());
-        user.setName(userDto.name());
-        user.setEmail(userDto.email());
+        user.setId(userDto.getId());
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setRole(userDto.getRole());
         return user;
     }
 }

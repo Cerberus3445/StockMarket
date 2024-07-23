@@ -14,7 +14,7 @@ public interface StockService {
 
     Mono<StockDto> create(Mono<StockDto> dtoMono);
 
-    Flux<StockDto> getByPage(Integer page, Integer size);
+    Flux<StockDto> getWithPagination(Integer page, Integer size);
 
     Mono<StockDto> update(Integer id, Mono<StockDto> dtoMono);
 
