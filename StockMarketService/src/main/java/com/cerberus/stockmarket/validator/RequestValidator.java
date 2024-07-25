@@ -23,4 +23,5 @@ public class RequestValidator {
     private static Predicate<StockDto> hasValidTicker() {
         return dto -> dto.ticker().length() >= 2 && dto.ticker().length() <= 4;
     }
+
 }

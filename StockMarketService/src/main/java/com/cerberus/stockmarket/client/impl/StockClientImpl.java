@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -22,6 +24,8 @@ public class StockClientImpl implements StockClient {
     private String token;
 
     private final Logger logger = LoggerFactory.getLogger(StockClientImpl.class);
+
+    private final Sinks.Many<StockPriceDto> sink;
 
     private final StockService stockService;
 
@@ -42,12 +46,15 @@ public class StockClientImpl implements StockClient {
                 .uri(uriBuilder -> uriBuilder.path(path).query(query).build(map))
                 .retrieve()
                 .bodyToMono(StockPriceDto.class)
-                .doOnNext(stockPriceDto -> stockPriceDto.setTicker(ticker));
+                .doOnNext(stockPriceDto -> stockPriceDto.setTicker(ticker))
+                .doOnNext(this.sink::tryEmitNext);
     }
 
     @Override
     public Flux<StockPriceDto> getPriceWithPagination(Integer page, Integer size) {
         return this.stockService.getWithPagination(page, size)
-                .flatMap(stockDto -> getPrice(stockDto.ticker()));
+                .flatMap(stockDto -> getPrice(stockDto.ticker()))
+                .as(stockPriceDtoFlux -> sink.asFlux());
     }
+
 }

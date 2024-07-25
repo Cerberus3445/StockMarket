@@ -1,10 +1,10 @@
-package com.cerberus.userservice;
+package com.cerberus.webservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserServiceApplicationTests {
+class WebServiceApplicationTests {
 
     @Test
     void contextLoads() {

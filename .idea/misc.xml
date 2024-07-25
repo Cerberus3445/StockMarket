@@ -9,6 +9,8 @@
         <option value="$PROJECT_DIR$/StockMarket/pom.xml" />
         <option value="$PROJECT_DIR$/UserService/pom.xml" />
         <option value="$PROJECT_DIR$/StockMarketService/pom.xml" />
+        <option value="$PROJECT_DIR$/WebService/pom.xml" />
+        <option value="$PROJECT_DIR$/DemoTrading/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

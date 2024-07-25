@@ -9,4 +9,5 @@ public interface StockClient {
     Mono<StockPriceDto> getPrice(String ticker);
 
     Flux<StockPriceDto> getPriceWithPagination(Integer page, Integer size);
+
 }

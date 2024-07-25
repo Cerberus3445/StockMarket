@@ -18,5 +18,5 @@ public interface StockService {
 
     Mono<StockDto> update(Integer id, Mono<StockDto> dtoMono);
 
-    Mono<Boolean> delete(Integer id);
+    Mono<Void> delete(Integer id);
 }

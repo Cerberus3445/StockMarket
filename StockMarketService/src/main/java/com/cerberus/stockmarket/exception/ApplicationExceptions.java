@@ -20,4 +20,8 @@ public class ApplicationExceptions {
     public static <T>Mono<T> stockValidationTicker(){
         return Mono.error(new StockValidationException("Тикер акции должен быть от 2 до 4 символов"));
     }
+
+    public static <T>Mono<T> stockAlreadyExists(){
+        return Mono.error(new StockAlreadyExistsException());
+    }
 }

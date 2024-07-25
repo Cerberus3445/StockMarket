@@ -1,5 +1,6 @@
 package com.cerberus.stockmarket.advice;
 
+import com.cerberus.stockmarket.exception.StockAlreadyExistsException;
 import com.cerberus.stockmarket.exception.StockNotFoundException;
 import com.cerberus.stockmarket.exception.StockValidationException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,14 @@ public class ExceptionHandlingControllerAdvice {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, stockValidationException.getMessage());
         problemDetail.setTitle("Ошибка валидации");
         problemDetail.setDetail(stockValidationException.getMessage());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(StockAlreadyExistsException.class)
+    public ProblemDetail handleException(StockAlreadyExistsException stockAlreadyExistsException){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, stockAlreadyExistsException.getMessage());
+        problemDetail.setTitle("Акция уже существует");
+        problemDetail.setDetail(stockAlreadyExistsException.getMessage());
         return problemDetail;
     }
 }

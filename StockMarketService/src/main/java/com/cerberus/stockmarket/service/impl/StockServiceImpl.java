@@ -2,6 +2,7 @@ package com.cerberus.stockmarket.service.impl;
 
 import com.cerberus.stockmarket.dto.StockDto;
 import com.cerberus.stockmarket.exception.ApplicationExceptions;
+import com.cerberus.stockmarket.exception.StockAlreadyExistsException;
 import com.cerberus.stockmarket.mapper.StockMapper;
 import com.cerberus.stockmarket.repository.StockRepository;
 import com.cerberus.stockmarket.service.StockService;
@@ -77,10 +78,11 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Mono<Boolean> delete(Integer id) {
+    public Mono<Void> delete(Integer id) {
         log.info("delete {}", id);
         return this.stockRepository.deleteWithId(id)
-                .switchIfEmpty(ApplicationExceptions.stockNotFound(id));
+                .switchIfEmpty(ApplicationExceptions.stockNotFound(id))
+                .then();
     }
 
 }

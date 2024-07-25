@@ -17,10 +17,10 @@ public class RequestValidator {
     }
 
     private static Predicate<UserDto> hasName(){
-        return dto -> !dto.name().isEmpty();
+        return dto -> !dto.getName().isEmpty();
     }
 
     private static Predicate<UserDto> hasValidEmail() {
-        return dto -> !dto.name().isEmpty() && dto.email().contains("@");
+        return dto -> !dto.getEmail().isEmpty() && dto.getEmail().contains("@");
     }
 }

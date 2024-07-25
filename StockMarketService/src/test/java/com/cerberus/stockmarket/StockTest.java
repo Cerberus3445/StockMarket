@@ -1,6 +1,7 @@
 package com.cerberus.stockmarket;
 
 import com.cerberus.stockmarket.dto.StockDto;
+import com.cerberus.stockmarket.dto.StockPriceDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -47,20 +48,15 @@ class StockTest {
 
     @Test
     public void tickerValidationException(){
-        Mono<StockDto> just = Mono.just(new StockDto(null, "dasadssad", "title"));
+        var mono = Mono.just(new StockDto(null, "dasadssad", "title"));
         this.webTestClient.post()
                 .uri("/api/v1/stocks")
-                .body(just, StockDto.class)
+                .body(mono, StockDto.class)
                 .exchange()
                 .expectStatus().is4xxClientError()
                 .expectBody()
                 .jsonPath("$.title").isEqualTo("Ошибка валидации")
                 .jsonPath("$.detail").isEqualTo("Тикер акции должен быть от 2 до 4 символов");
-    }
-
-    @Test
-    public void getWithPagination(){
-
     }
 
     private WebTestClient.BodyContentSpec getById(Integer id, HttpStatus expectedStatus){

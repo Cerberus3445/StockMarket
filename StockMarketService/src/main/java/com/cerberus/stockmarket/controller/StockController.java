@@ -3,15 +3,12 @@ package com.cerberus.stockmarket.controller;
 import com.cerberus.stockmarket.client.StockClient;
 import com.cerberus.stockmarket.dto.StockDto;
 import com.cerberus.stockmarket.dto.StockPriceDto;
-import com.cerberus.stockmarket.exception.ApplicationExceptions;
 import com.cerberus.stockmarket.service.StockService;
-import com.cerberus.stockmarket.validator.RequestValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +29,7 @@ public class StockController {
         return this.stockService.create(stockDtoMono);
     }
 
-    @GetMapping("/price/page/{page}/size/{size}")
+    @GetMapping(value = "/price/page/{page}/size/{size}", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<StockPriceDto> getWithPagination(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
         return this.stockClient.getPriceWithPagination(page, size);
     }
@@ -54,10 +51,7 @@ public class StockController {
 
     @DeleteMapping("/{id}")
     public Mono<Void> delete(@PathVariable("id") Integer id){
-        return this.stockService.delete(id)
-                .filter(i -> i == true)
-                .switchIfEmpty(ApplicationExceptions.stockNotFound(id))
-                .then();
+        return this.stockService.delete(id);
     }
 
     @GetMapping("/{ticker}/price")
