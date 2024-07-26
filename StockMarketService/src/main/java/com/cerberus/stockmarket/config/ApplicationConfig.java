@@ -10,6 +10,6 @@ public class ApplicationConfig {
 
     @Bean
     public Sinks.Many<StockPriceDto> sink(){
-        return Sinks.many().replay().limit(10);
+        return Sinks.many().replay().limit(1);
     }
 }
