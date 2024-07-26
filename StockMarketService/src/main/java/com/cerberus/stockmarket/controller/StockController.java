@@ -2,7 +2,9 @@ package com.cerberus.stockmarket.controller;
 
 import com.cerberus.stockmarket.client.StockClient;
 import com.cerberus.stockmarket.dto.StockDto;
-import com.cerberus.stockmarket.dto.StockPriceDto;
+import com.cerberus.stockmarket.model.MarketStatus;
+import com.cerberus.stockmarket.model.StockPrice;
+import com.cerberus.stockmarket.model.StockRecommendation;
 import com.cerberus.stockmarket.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -30,13 +32,23 @@ public class StockController {
     }
 
     @GetMapping(value = "/price/page/{page}/size/{size}", produces = MediaType.APPLICATION_NDJSON_VALUE)
-    public Flux<StockPriceDto> getWithPagination(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
+    public Flux<StockPrice> getWithPagination(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
         return this.stockClient.getPriceWithPagination(page, size);
     }
 
     @GetMapping("/{id}")
     public Mono<StockDto> getById(@PathVariable("id") Integer id){
         return this.stockService.getById(id);
+    }
+
+    @GetMapping("/ticker/{ticker}/recommendation")
+    public Flux<StockRecommendation> getRecommendation(@PathVariable("ticker") String ticker){
+        return this.stockClient.getRecommendation(ticker);
+    }
+
+    @GetMapping("/market-status/{market}")
+    public Mono<MarketStatus> getMarketStatus(@PathVariable("market") String market){
+        return this.stockClient.getMarketStatus(market);
     }
 
     @GetMapping("/ticker/{ticker}")
@@ -55,7 +67,7 @@ public class StockController {
     }
 
     @GetMapping("/{ticker}/price")
-    public Mono<StockPriceDto> getPrice(@PathVariable("ticker") String ticker){
+    public Mono<StockPrice> getPrice(@PathVariable("ticker") String ticker){
         return this.stockClient.getPrice(ticker);
     }
 }

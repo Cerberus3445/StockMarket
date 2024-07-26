@@ -1,7 +1,6 @@
 package com.cerberus.stockmarket;
 
 import com.cerberus.stockmarket.dto.StockDto;
-import com.cerberus.stockmarket.dto.StockPriceDto;
 import com.cerberus.stockmarket.util.Method;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

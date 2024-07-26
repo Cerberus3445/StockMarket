@@ -21,9 +21,9 @@ public class DataSetupService implements CommandLineRunner { //автомати�
 
     @Override
     public void run(String... args) throws Exception {
-        stockService.getAll()
-                .delayElements(Duration.ofSeconds(3))
-                .flatMap(i -> stockClient.getPrice(i.ticker()))
-                .subscribe();
+//        stockService.getAll()
+//                .delayElements(Duration.ofSeconds(3))
+//                .flatMap(i -> stockClient.getPrice(i.ticker()))
+//                .subscribe();
     }
 }

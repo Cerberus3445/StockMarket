@@ -1,7 +1,9 @@
 package com.cerberus.stockmarket.client.impl;
 
 import com.cerberus.stockmarket.client.StockClient;
-import com.cerberus.stockmarket.dto.StockPriceDto;
+import com.cerberus.stockmarket.model.MarketStatus;
+import com.cerberus.stockmarket.model.StockPrice;
+import com.cerberus.stockmarket.model.StockRecommendation;
 import com.cerberus.stockmarket.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,7 +16,6 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class StockClientImpl implements StockClient {
 
     private final Logger logger = LoggerFactory.getLogger(StockClientImpl.class);
 
-    private final Sinks.Many<StockPriceDto> sink;
+    private final Sinks.Many<StockPrice> sink;
 
     private final StockService stockService;
 
@@ -34,7 +35,7 @@ public class StockClientImpl implements StockClient {
             .build();
 
     @Override
-    public Mono<StockPriceDto> getPrice(String ticker) {
+    public Mono<StockPrice> getPrice(String ticker) {
         logger.info("getPrice {}", ticker);
         var path = "/quote";
         var query = "symbol={ticker}&token={token}";
@@ -45,16 +46,46 @@ public class StockClientImpl implements StockClient {
         return this.webClient.get()
                 .uri(uriBuilder -> uriBuilder.path(path).query(query).build(map))
                 .retrieve()
-                .bodyToMono(StockPriceDto.class)
+                .bodyToMono(StockPrice.class)
                 .doOnNext(stockPriceDto -> stockPriceDto.setTicker(ticker))
                 .doOnNext(this.sink::tryEmitNext);
     }
 
     @Override
-    public Flux<StockPriceDto> getPriceWithPagination(Integer page, Integer size) {
+    public Flux<StockPrice> getPriceWithPagination(Integer page, Integer size) {
         return this.stockService.getWithPagination(page, size)
                 .flatMap(stockDto -> getPrice(stockDto.ticker()))
                 .as(stockPriceDtoFlux -> sink.asFlux());
     }
 
+    @Override
+    public Flux<StockRecommendation> getRecommendation(String ticker) {
+        logger.info("getRecommendation {}", ticker);
+        var path = "/stock/recommendation";
+        var query = "symbol={ticker}&token={token}";
+        var map = Map.of(
+                "ticker", ticker,
+                "token", token
+        );
+        return this.webClient.get()
+                .uri(uriBuilder -> uriBuilder.path(path).query(query).build(map))
+                .retrieve()
+                .bodyToFlux(StockRecommendation.class)
+                .doOnNext(stockRecommendation -> stockRecommendation.setTicker(ticker));
+    }
+
+    @Override
+    public Mono<MarketStatus> getMarketStatus(String market) {
+        logger.info("getMarketStatus {}", market);
+        var path = "/stock/market-status";
+        var query = "exchange={exchange}&token={token}";
+        var map = Map.of(
+          "exchange" , market,
+          "token", token
+        );
+        return this.webClient.get()
+                .uri(uriBuilder -> uriBuilder.path(path).query(query).build(map))
+                .retrieve()
+                .bodyToMono(MarketStatus.class);
+    }
 }

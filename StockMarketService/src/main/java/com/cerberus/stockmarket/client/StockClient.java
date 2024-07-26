@@ -1,13 +1,19 @@
 package com.cerberus.stockmarket.client;
 
-import com.cerberus.stockmarket.dto.StockPriceDto;
+import com.cerberus.stockmarket.model.MarketStatus;
+import com.cerberus.stockmarket.model.StockPrice;
+import com.cerberus.stockmarket.model.StockRecommendation;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface StockClient {
 
-    Mono<StockPriceDto> getPrice(String ticker);
+    Mono<StockPrice> getPrice(String ticker);
 
-    Flux<StockPriceDto> getPriceWithPagination(Integer page, Integer size);
+    Flux<StockPrice> getPriceWithPagination(Integer page, Integer size);
+
+    Flux<StockRecommendation> getRecommendation(String ticker);
+
+    Mono<MarketStatus> getMarketStatus(String market);
 
 }
