@@ -40,6 +40,29 @@ class StockTest {
     }
 
     @Test
+    public void getRecommendation(){
+        this.webTestClient.get()
+                .uri("/api/v1/stocks/ticker/AMZN/recommendation")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody()
+                .jsonPath("$.[0].buy").isEqualTo(45)
+                .jsonPath("$.[0].hold").isEqualTo(2)
+                .jsonPath("$.[0].sell").isEqualTo(0)
+                .jsonPath("$.[0].ticker").isEqualTo("AMZN");
+    }
+
+    @Test
+    public void getMarketStatus(){
+        this.webTestClient.get()
+                .uri("/api/v1/stocks/market-status/US")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody()
+                .jsonPath("$.isOpen").isEqualTo(false);
+    }
+
+    @Test
     public void notFoundTicker(){
         request(Method.GET_BY_TICKER,  HttpStatus.NOT_FOUND, "asdd")
                 .jsonPath("$.title").isEqualTo("Акция не найдена")
