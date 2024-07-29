@@ -16,14 +16,13 @@ public class PortfolioItemController {
 
     private final PortfolioItemService portfolioItemService;
 
-
     @PostMapping()
     public Mono<TradeResponse> trade(@RequestBody Mono<TradeRequest> tradeRequest){
         return tradeRequest.flatMap(this.portfolioItemService::trade);
     }
 
-    @GetMapping("/user/{id}")
-    private Flux<PortfolioItemDto> getTradeHistory(@PathVariable("id") Integer userId){
+    @GetMapping("/user/history/{id}")
+    public Flux<PortfolioItemDto> getTradeHistory(@PathVariable("id") Integer userId){
         return this.portfolioItemService.getTradeHistory(userId);
     }
 }

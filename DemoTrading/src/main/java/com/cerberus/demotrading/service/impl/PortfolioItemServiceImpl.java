@@ -2,12 +2,13 @@ package com.cerberus.demotrading.service.impl;
 
 import com.cerberus.demotrading.dto.PortfolioItemDto;
 import com.cerberus.demotrading.exception.ApplicationExceptions;
-import com.cerberus.demotrading.mapper.PortfolioItemMapper;
+import com.cerberus.demotrading.mapper.EntityDtoMapper;
 import com.cerberus.demotrading.model.*;
 import com.cerberus.demotrading.repository.PortfolioItemRepository;
 import com.cerberus.demotrading.repository.UserBalanceRepository;
 import com.cerberus.demotrading.service.PortfolioItemService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PortfolioItemServiceImpl implements PortfolioItemService {
 
-    private final static Logger log = LoggerFactory.getLogger(PortfolioItemServiceImpl.class);
 
     private final PortfolioItemRepository portfolioItemRepository;
 
@@ -27,7 +28,7 @@ public class PortfolioItemServiceImpl implements PortfolioItemService {
 
     @Override
     public Mono<TradeResponse> trade(TradeRequest tradeRequest) {
-        log.info("trade");
+        log.info("trade {}", tradeRequest);
        return switch (tradeRequest.tradeAction()){
            case BUY -> buy(tradeRequest);
            case SELL -> sell(tradeRequest);
@@ -36,8 +37,9 @@ public class PortfolioItemServiceImpl implements PortfolioItemService {
 
     @Override
     public Flux<PortfolioItemDto> getTradeHistory(Integer userId) {
+        log.info("getTradeHistory {}", userId);
         return this.portfolioItemRepository.findByUserId(userId)
-                .map(PortfolioItemMapper::toDto);
+                .map(EntityDtoMapper::toDto);
     }
 
     private Mono<TradeResponse> buy(TradeRequest tradeRequest) {
