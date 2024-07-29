@@ -6,6 +6,7 @@ import com.cerberus.stockmarket.model.StockPrice;
 import com.cerberus.stockmarket.model.StockRecommendation;
 import com.cerberus.stockmarket.service.StockService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,14 +19,12 @@ import reactor.core.publisher.Sinks;
 import java.util.Map;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class StockClientImpl implements StockClient {
 
     @Value("${finnhub.token}")
     private String token;
-
-    private final Logger logger = LoggerFactory.getLogger(StockClientImpl.class);
-
     private final Sinks.Many<StockPrice> sink;
 
     private final StockService stockService;
@@ -36,7 +35,7 @@ public class StockClientImpl implements StockClient {
 
     @Override
     public Mono<StockPrice> getPrice(String ticker) {
-        logger.info("getPrice {}", ticker);
+        log.info("getPrice {}", ticker);
         var path = "/quote";
         var query = "symbol={ticker}&token={token}";
         var map = Map.of(
@@ -60,7 +59,7 @@ public class StockClientImpl implements StockClient {
 
     @Override
     public Flux<StockRecommendation> getRecommendation(String ticker) {
-        logger.info("getRecommendation {}", ticker);
+        log.info("getRecommendation {}", ticker);
         var path = "/stock/recommendation";
         var query = "symbol={ticker}&token={token}";
         var map = Map.of(
@@ -76,7 +75,7 @@ public class StockClientImpl implements StockClient {
 
     @Override
     public Mono<MarketStatus> getMarketStatus(String market) {
-        logger.info("getMarketStatus {}", market);
+        log.info("getMarketStatus {}", market);
         var path = "/stock/market-status";
         var query = "exchange={exchange}&token={token}";
         var map = Map.of(

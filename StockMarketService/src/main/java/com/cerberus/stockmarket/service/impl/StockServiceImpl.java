@@ -8,6 +8,7 @@ import com.cerberus.stockmarket.repository.StockRepository;
 import com.cerberus.stockmarket.service.StockService;
 import com.cerberus.stockmarket.validator.RequestValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -16,13 +17,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
-
-    private final static Logger log = LoggerFactory.getLogger(StockServiceImpl.class);
-
     @Override
     public Mono<StockDto> getByTicker(String ticker){
         log.info("getByTicker {}", ticker);
