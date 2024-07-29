@@ -1,4 +1,4 @@
-package com.cerberus.stockmarket.model;
+package com.cerberus.demotrading.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,13 +9,13 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("stocks")
-public class Stock {
+@Table("user_balance")
+public class UserBalance {
 
     @Id
     private Integer id;
 
-    private String ticker;
+    private Integer userId;
 
-    private String title;
+    private Double balance;
 }
