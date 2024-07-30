@@ -7,16 +7,15 @@ import com.cerberus.stockmarket.model.StockRecommendation;
 import com.cerberus.stockmarket.service.StockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
-
 import java.util.Map;
+import java.util.Random;
+import java.util.function.Function;
 
 @Component
 @Slf4j
@@ -25,6 +24,7 @@ public class StockClientImpl implements StockClient {
 
     @Value("${finnhub.token}")
     private String token;
+
     private final Sinks.Many<StockPrice> sink;
 
     private final StockService stockService;
@@ -47,6 +47,7 @@ public class StockClientImpl implements StockClient {
                 .retrieve()
                 .bodyToMono(StockPrice.class)
                 .doOnNext(stockPriceDto -> stockPriceDto.setTicker(ticker))
+                .map(forTestStock())
                 .doOnNext(this.sink::tryEmitNext);
     }
 
@@ -86,5 +87,17 @@ public class StockClientImpl implements StockClient {
                 .uri(uriBuilder -> uriBuilder.path(path).query(query).build(map))
                 .retrieve()
                 .bodyToMono(MarketStatus.class);
+    }
+
+    private Function<StockPrice, StockPrice> forTestStock(){
+        return stockPrice -> {
+            Random random = new Random();
+            if (stockPrice.getTicker().equalsIgnoreCase("TEST")){
+                stockPrice.setC(random.nextDouble(100.0));
+                return stockPrice;
+            } else {
+                return stockPrice;
+            }
+        };
     }
 }
