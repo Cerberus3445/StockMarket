@@ -21,7 +21,7 @@ public class PortfolioItemController {
         return tradeRequest.flatMap(this.portfolioItemService::trade);
     }
 
-    @GetMapping("/user/history/{id}")
+    @GetMapping("/user/{id}/history")
     public Flux<PortfolioItemDto> getTradeHistory(@PathVariable("id") Integer userId){
         return this.portfolioItemService.getTradeHistory(userId);
     }

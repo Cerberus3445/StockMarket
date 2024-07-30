@@ -1,4 +1,4 @@
-package com.cerberus.demotrading.model;
+package com.cerberus.webservice.dto;
 
 public record TradeResponse(
         Integer userId,
