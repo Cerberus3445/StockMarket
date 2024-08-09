@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Bazaar</title>
+
+  <link rel="stylesheet" href="../../static/css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="#" class="logo">
+        <img src="../../static/images/logo.png" width="32" height="32" alt="Crypto Bazaar logo">
+        Название проекта
+      </a>
+
+      <nav class="navbar" data-navbar>
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link active" data-nav-link>Страница пользователя</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#market" class="navbar-link" data-nav-link>Рынок</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#about" class="navbar-link" data-nav-link>О нас</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+
+    </div>
+  </header>
+
+
+  <main>
+    <article>
+
+      <section class="home" aria-label="home" data-section>
+        <div class="container">
+
+          <div class="home-content">
+
+            <h1 class="h1 home-title">Следите за фондовым рынком вместе с нами</h1>
+
+            <p class="home-text">
+              Цены акций, новости компаний, торговый календарь, демо торговля
+            </p>
+              <p></p>
+
+            <a href="#" class="btn btn-primary">Let's get started</a>
+
+          </div>
+
+          <figure class="home-banner">
+              <!-- сюда картинку -->
+            <img src="../../static/images/main-page-side.png" width="570" height="448" alt="home banner" class="w-100">
+          </figure>
+
+        </div>
+      </section>
+
+
+      <section class="trend" aria-label="crypto trend" data-section id="trend">
+        <div class="container">
+
+          <div class="trend-tab">
+
+            <ul class="tab-nav">
+
+              <li>
+                <button class="tab-btn active">Банки</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Нефть</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">IT</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Агропромышленность</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Еще</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Еще</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Еще</button>
+              </li>
+
+            </ul>
+
+            <ul class="tab-content">
+
+              <li>
+                <div class="trend-card">
+
+                  <div class="card-title-wrapper">
+
+                    <a href="#" class="card-title">
+                      Bitcoin <span class="span">BTC/USD</span>
+                    </a>
+                  </div>
+
+                  <data class="card-value" value="46168.95">USD 46,168.95</data>
+
+                  <div class="card-analytics">
+                    <data class="current-price" value="36641.20">36,641.20</data>
+
+                    <div class="badge red">-0.79%</div>
+                  </div>
+
+                </div>
+              </li>
+
+              <li>
+                <div class="trend-card active">
+
+                  <div class="card-title-wrapper">
+
+                    <a href="#" class="card-title">
+                      Ethereum <span class="span">ETH/USD</span>
+                    </a>
+                  </div>
+
+                  <data class="card-value" value="3480.04">USD 3,480.04</data>
+
+                  <div class="card-analytics">
+                    <data class="current-price" value="36641.20">36,641.20</data>
+
+                    <div class="badge green">+10.55%</div>
+                  </div>
+
+                </div>
+              </li>
+
+              <li>
+                <div class="trend-card">
+
+                  <div class="card-title-wrapper">
+
+                    <a href="#" class="card-title">
+                      Tether <span class="span">USDT/USD</span>
+                    </a>
+                  </div>
+
+                  <data class="card-value" value="1.00">USD 1.00</data>
+
+                  <div class="card-analytics">
+                    <data class="current-price" value="36641.20">36,641.20</data>
+
+                    <div class="badge red">-0.01%</div>
+                  </div>
+
+                </div>
+              </li>
+
+              <li>
+                <div class="trend-card">
+
+                  <div class="card-title-wrapper">
+
+                    <a href="#" class="card-title">
+                      BNB <span class="span">BNB/USD</span>
+                    </a>
+                  </div>
+
+                  <data class="card-value" value="443.56">USD 443.56</data>
+
+                  <div class="card-analytics">
+                    <data class="current-price" value="36641.20">36,641.20</data>
+
+                    <div class="badge red">-1.24%</div>
+                  </div>
+
+                </div>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+      </section>
+
+      <section class="market" id="market" aria-label="market update" data-section>
+        <div class="container">
+
+          <div class="title-wrapper">
+            <h2 class="h2 section-title">Рынок акций</h2>
+
+            <a href="#" class="btn-link">See All Coins</a>
+          </div>
+
+          <div class="market-tab">
+
+            <ul class="tab-nav">
+
+              <li>
+                <button class="tab-btn active">View All</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Metaverse</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Entertainment</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Energy</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">NFT</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Gaming</button>
+              </li>
+
+              <li>
+                <button class="tab-btn">Music</button>
+              </li>
+
+            </ul>
+
+            <table class="market-table">
+
+              <thead class="table-head">
+
+                <tr class="table-row table-title">
+
+                  <th class="table-heading"></th>
+
+                  <th class="table-heading" scope="col">#</th>
+
+                  <th class="table-heading" scope="col">Название</th>
+
+                  <th class="table-heading" scope="col">Текущая цена</th>
+
+                  <th class="table-heading" scope="col">Изменение за день %</th>
+
+                    <th class="table-heading" scope="col">Изменение за день</th>
+
+                  <th class="table-heading" scope="col">Цена открытия</th>
+
+                  <th class="table-heading"></th>
+
+                </tr>
+
+              </thead>
+
+              <tbody class="table-body">
+
+                <tr class="table-row">
+
+                  <td class="table-data">
+                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+                      <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon>
+                    </button>
+                  </td>
+
+                  <th class="table-data rank" scope="row">1</th>
+
+                  <td class="table-data">
+                    <div class="wrapper">
+
+                      <h3>
+                        <a href="#" class="coin-name">Amazon.com Inc <span class="span">AMZN</span></a>
+                      </h3>
+                    </div>
+                  </td>
+
+                  <td class="table-data last-price">$56,623.54</td>
+
+                  <td class="table-data last-update green">+1.45%</td>
+
+                    <td class="table-data market-cap">$880,423,640,582</td>
+
+                    <td class="table-data market-cap">цена</td>
+
+                  <td class="table-data">
+                    <button class="btn btn-outline">Trade</button>
+                  </td>
+
+                </tr>
+
+
+                <tr class="table-row">
+
+                  <td class="table-data">
+                    <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
+                      <ion-icon name="star-outline" aria-hidden="true" class="icon-outline"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true" class="icon-fill"></ion-icon>
+                    </button>
+                  </td>
+
+                  <th class="table-data rank" scope="row">2</th>
+
+                  <td class="table-data">
+                    <div class="wrapper">
+
+                      <h3>
+                        <a href="#" class="coin-name">Apple Inc <span class="span">AAPL</span></a>
+                      </h3>
+                    </div>
+                  </td>
+
+                  <td class="table-data last-price">$56,623.54</td>
+
+                  <td class="table-data last-update green">+1.41%</td>
+
+                  <td class="table-data market-cap">$880,423,640,582</td>
+
+                  <td class="table-data">
+                    <p>цена </p>
+                  </td>
+
+                  <td class="table-data">
+                    <button class="btn btn-outline">Trade</button>
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="about" id="about" aria-label="about" data-section>
+        <div class="container">
+
+          <figure class="about-banner">
+            <img src="../../static/images/app-about.png" width="748" height="436" loading="lazy" alt="about banner"
+                 class="w-100">
+          </figure>
+
+          <div class="about-content">
+
+            <h2 class="h2 section-title">Пробуйте себя в демо-торговле</h2>
+
+            <p class="section-text">
+              мы(вообще я один это все делаю) предоставляем возможность попробовать себя в демо-торговле на демо-счёте, торгуя акциями
+                американских компаний.
+            </p>
+
+            <ul class="section-list">
+
+              <li class="section-item">
+                <div class="title-wrapper">
+                  <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+
+                  <h3 class="h3 list-title">Мнение аналитиков</h3>
+                </div>
+
+                <p class="item-text">
+                    в каждой акции вы можете посмотреть мнения аналитиков о ней.
+                </p>
+              </li>
+
+              <li class="section-item">
+                <div class="title-wrapper">
+                  <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+
+                  <h3 class="h3 list-title">Смотрите торговый календарь американских бирж.</h3>
+                </div>
+
+                <p class="item-text">
+                    все выходные на американском рынке в одной вкладке
+                </p>
+              </li>
+
+            </ul>
+
+            <a href="#" class="btn btn-primary">Узнать больше</a>
+
+          </div>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+
+  <footer class="footer">
+
+    <div class="footer-top" data-section>
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">
+            <img src="../../static/images/logo.png" width="50" height="50" alt="Crypto Bazaar logo">
+            Название компании
+          </a>
+
+          <h2 class="footer-title">Контакты</h2>
+
+          <a href="" class="footer-contact-link">номер телефона</a>
+
+          <a href="" class="footer-contact-link">почта</a>
+
+          <address class="footer-contact-link">
+            Россия
+          </address>
+
+          <p>Сайт предоставляет просмотр цен акций, мнение аналитиков, демо-торговлю, новости акций и статут американского рынка</p>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2024 Все права защищены <a href="#" class="copyright-link">Компания</a>
+        </p>
+
+        <ul class="social-list">
+
+          <li>
+            <a href="https://twitter.com/Naitik_168?t=PWdCMJQ3y2hmrvDg9lsu3g&s=09" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+          
+          <li>
+            <a href="https://github.com/Naitik168" class="social-link">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="https://www.linkedin.com/in/naitikmakwana" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+  </footer>
+
+
+  <script src="../../static/js/script.js" defer></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
