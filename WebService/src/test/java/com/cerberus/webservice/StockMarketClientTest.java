@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-@SpringBootTest
 @Slf4j
+@SpringBootTest
 class StockMarketClientTest {
 
     @Autowired

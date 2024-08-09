@@ -14,6 +14,6 @@ public interface UserRepository extends ReactiveCrudRepository<User, Integer> {
     Mono<User> findByEmail(String email);
 
     @Modifying
-    @Query("delete from stock_market.Stocks where id=:id")
+    @Query("delete from stock_market.user where id=:id")
     Mono<Boolean> deleteWithId(Integer id);
 }

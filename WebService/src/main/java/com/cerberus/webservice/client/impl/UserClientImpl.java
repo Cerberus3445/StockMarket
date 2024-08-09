@@ -43,11 +43,18 @@ public class UserClientImpl implements UserClient {
 
     @Override
     public Mono<UserDto> update(Integer id, Mono<UserDto> dtoMono) {
-        return null;
+        return this.webClient.patch()
+                .uri("/{id}", id)
+                .body(dtoMono, UserDto.class)
+                .retrieve()
+                .bodyToMono(UserDto.class);
     }
 
     @Override
     public Mono<Void> delete(Integer id) {
-        return null;
+        return this.webClient.delete()
+                .uri("/{id}", id)
+                .retrieve()
+                .bodyToMono(Void.class);
     }
 }
