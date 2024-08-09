@@ -6,6 +6,7 @@ import com.cerberus.webservice.dto.StockPriceDto;
 import com.cerberus.webservice.model.MarketStatus;
 import com.cerberus.webservice.model.StockRecommendation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,6 +15,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class StockMarketClientImpl implements StockMarketClient {
 
@@ -25,6 +27,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Flux<StockPriceDto> getStocksPricesWithPagination(Integer page, Integer size){
+        log.info("getStocksPricesWithPagination page: {}, size: {}", page, size);
         return this.webClient.get()
                 .uri("/price/page/{page}/size/{size}", page, size)
                 .accept(MediaType.APPLICATION_NDJSON)
@@ -35,6 +38,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Flux<StockRecommendation> getStockRecommendation(String ticker) {
+        log.info("getStockRecommendation {}", ticker);
         return this.webClient.get()
                 .uri("/ticker/{ticker}/recommendation", ticker)
                 .retrieve()
@@ -43,6 +47,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Mono<StockDto> getStock(String ticker) {
+        log.info("getStock {}", ticker);
         return this.webClient.get()
                 .uri("/ticker/{ticker}", ticker)
                 .retrieve()
@@ -51,6 +56,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Flux<StockDto> getAllStock() {
+        log.info("getAllStock");
         return this.webClient.get()
                 .retrieve()
                 .bodyToFlux(StockDto.class);
@@ -58,6 +64,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Mono<StockDto> createStock(Mono<StockDto> stockDto) {
+        log.info("createStock");
         return this.webClient.post()
                 .body(stockDto, StockDto.class)
                 .retrieve()
@@ -66,6 +73,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Mono<StockDto> updateStock(Integer id, Mono<StockDto> stockDto) {
+        log.info("updateStock");
         return this.webClient.patch()
                 .uri("/{id}", id)
                 .body(stockDto, StockDto.class)
@@ -75,6 +83,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Mono<Void> deleteStock(Integer id) {
+        log.info("deleteStock {}", id);
         return this.webClient.delete()
                 .uri("/{id}", id)
                 .retrieve()
@@ -83,6 +92,7 @@ public class StockMarketClientImpl implements StockMarketClient {
 
     @Override
     public Mono<MarketStatus> getMarketStatus() {
+        log.info("getMarketStatus");
         return this.webClient.get()
                 .uri("/market-status/US")
                 .retrieve()
