@@ -89,7 +89,7 @@ public class StockClientImpl implements StockClient {
                 .bodyToMono(MarketStatus.class);
     }
 
-    private Function<StockPrice, StockPrice> forTestStock(){
+    private Function<StockPrice, StockPrice> forTestStock(){ //для акции TEST
         return stockPrice -> {
             Random random = new Random();
             if (stockPrice.getTicker().equalsIgnoreCase("TEST")){

@@ -46,6 +46,14 @@ public class StockMarketClientImpl implements StockMarketClient {
     }
 
     @Override
+    public Mono<StockPriceDto> getStockPrice(String ticker) {
+        return this.webClient.get()
+                .uri("/{ticker}/price")
+                .retrieve()
+                .bodyToMono(StockPriceDto.class);
+    }
+
+    @Override
     public Mono<StockDto> getStock(String ticker) {
         log.info("getStock {}", ticker);
         return this.webClient.get()
