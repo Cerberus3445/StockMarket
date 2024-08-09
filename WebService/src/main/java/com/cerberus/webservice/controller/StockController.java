@@ -1,6 +1,6 @@
 package com.cerberus.webservice.controller;
 
-import com.cerberus.webservice.client.StockClient;
+import com.cerberus.webservice.client.StockMarketClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +14,12 @@ import org.thymeleaf.spring6.context.webflux.ReactiveDataDriverContextVariable;
 @RequiredArgsConstructor
 public class StockController {
 
-    private final StockClient stockClient;
+    private final StockMarketClient stockMarketClient;
 
     @GetMapping()
     public String getPrices(final Model model){
         IReactiveDataDriverContextVariable iReactiveDataDriverContextVariable =
-                new ReactiveDataDriverContextVariable(stockClient.getStocksPricesWithPagination(1, 10), 1);
+                new ReactiveDataDriverContextVariable(stockMarketClient.getStocksPricesWithPagination(1, 10), 1);
         model.addAttribute("stockList", iReactiveDataDriverContextVariable);
         return "stock/list";
     }
