@@ -17,9 +17,9 @@ public interface StockMarketClient {
 
     Flux<StockDto> getAllStock();
 
-    Mono<StockDto> createStock(StockDto stockDto);
+    Mono<StockDto> createStock(Mono<StockDto> stockDto);
 
-    Mono<StockDto> updateStock(StockDto stockDto);
+    Mono<StockDto> updateStock(Integer id, Mono<StockDto> stockDto);
 
     Mono<Void> deleteStock(Integer id);
 

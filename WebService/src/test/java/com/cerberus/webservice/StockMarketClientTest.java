@@ -49,20 +49,20 @@ class StockMarketClientTest {
 
     @Test
     public void create(){
-        var stockDto = new StockDto(null, "NKE", "Nike Inc");
+        var stockDto = Mono.just(new StockDto(null, "CVX", "Chevron Corp"));
 
         this.stockMarketClient.createStock(stockDto)
                 .as(StepVerifier::create)
-                .assertNext(s -> Assertions.assertEquals("Nike Inc", s.title()))
+                .assertNext(s -> Assertions.assertEquals("Chevron Corp", s.title()))
                 .expectComplete()
                 .verify();
     }
 
     @Test
     public void update(){
-        var stockDto = new StockDto(16, "NKE", "Nike Company");
+        var stockDto = Mono.just(new StockDto(16, "NKE", "Nike Company"));
 
-        this.stockMarketClient.updateStock(stockDto)
+        this.stockMarketClient.updateStock(16, stockDto)
                 .as(StepVerifier::create)
                 .assertNext(s -> Assertions.assertEquals("Nike Company", s.title()))
                 .expectComplete()

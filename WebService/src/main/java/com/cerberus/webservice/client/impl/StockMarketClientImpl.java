@@ -57,18 +57,18 @@ public class StockMarketClientImpl implements StockMarketClient {
     }
 
     @Override
-    public Mono<StockDto> createStock(StockDto stockDto) {
+    public Mono<StockDto> createStock(Mono<StockDto> stockDto) {
         return this.webClient.post()
-                .bodyValue(stockDto)
+                .body(stockDto, StockDto.class)
                 .retrieve()
                 .bodyToMono(StockDto.class);
     }
 
     @Override
-    public Mono<StockDto> updateStock(StockDto stockDto) {
+    public Mono<StockDto> updateStock(Integer id, Mono<StockDto> stockDto) {
         return this.webClient.patch()
-                .uri("/{id}", stockDto.id())
-                .bodyValue(stockDto)
+                .uri("/{id}", id)
+                .body(stockDto, StockDto.class)
                 .retrieve()
                 .bodyToMono(StockDto.class);
     }
