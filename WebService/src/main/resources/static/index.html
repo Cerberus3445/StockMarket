@@ -51,7 +51,7 @@
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-header text-center">
-                    <strong>TEST</strong>
+                    <strong>TEST Company</strong>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title text-center" id="TEST">$100</h5>
@@ -164,7 +164,7 @@
 
         // get price updates
         const stockPriceUpdates = () => {
-            var source = new EventSource("http://localhost:6060/api/v1/stocks/price/page/1/size/6");
+            var source = new EventSource("/web/stocks");
             source.onmessage = (evt) => {
                 let event = JSON.parse(evt.data);
                 let element = document.getElementById(event.ticker);

@@ -14,6 +14,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
+import java.util.Map;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -30,7 +32,6 @@ public class StockMarketClientImpl implements StockMarketClient {
         log.info("getStocksPricesWithPagination page: {}, size: {}", page, size);
         return this.webClient.get()
                 .uri("/price/page/{page}/size/{size}", page, size)
-                .accept(MediaType.APPLICATION_NDJSON)
                 .retrieve()
                 .bodyToFlux(StockPriceDto.class)
                 .doOnNext(this.sink::tryEmitNext);
@@ -43,14 +44,6 @@ public class StockMarketClientImpl implements StockMarketClient {
                 .uri("/ticker/{ticker}/recommendation", ticker)
                 .retrieve()
                 .bodyToFlux(StockRecommendation.class);
-    }
-
-    @Override
-    public Mono<StockPriceDto> getStockPrice(String ticker) {
-        return this.webClient.get()
-                .uri("/{ticker}/price")
-                .retrieve()
-                .bodyToMono(StockPriceDto.class);
     }
 
     @Override

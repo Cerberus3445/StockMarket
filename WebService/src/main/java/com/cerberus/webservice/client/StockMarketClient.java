@@ -13,8 +13,6 @@ public interface StockMarketClient {
 
     Flux<StockRecommendation> getStockRecommendation(String ticker);
 
-    Mono<StockPriceDto> getStockPrice(String ticker);
-
     Mono<StockDto> getStock(String ticker);
 
     Flux<StockDto> getAllStock();

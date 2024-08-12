@@ -31,7 +31,7 @@ public class StockController {
         return this.stockService.create(stockDtoMono);
     }
 
-    @GetMapping(value = "/price/page/{page}/size/{size}", produces = MediaType.APPLICATION_NDJSON_VALUE)
+    @GetMapping(value = "/price/page/{page}/size/{size}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<StockPrice> getWithPagination(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
         return this.stockClient.getPriceWithPagination(page, size);
     }
