@@ -1,7 +1,7 @@
 package com.cerberus.webservice.controller.rest;
 
 import com.cerberus.webservice.client.StockMarketClient;
-import com.cerberus.webservice.dto.StockPriceDto;
+import com.cerberus.webservice.model.StockPrice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class StockRestController {
     private final StockMarketClient stockMarketClient;
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<StockPriceDto> mainPage(){
+    public Flux<StockPrice> mainPage(){
         return this.stockMarketClient.getStreamStocksPrices();
     }
 }

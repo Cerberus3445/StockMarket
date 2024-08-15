@@ -2,7 +2,7 @@ package com.cerberus.webservice.client.impl;
 
 import com.cerberus.webservice.client.StockMarketClient;
 import com.cerberus.webservice.dto.StockDto;
-import com.cerberus.webservice.dto.StockPriceDto;
+import com.cerberus.webservice.model.StockPrice;
 import com.cerberus.webservice.model.MarketStatus;
 import com.cerberus.webservice.model.StockRecommendation;
 import lombok.RequiredArgsConstructor;
@@ -18,19 +18,19 @@ import reactor.core.publisher.Sinks;
 @RequiredArgsConstructor
 public class StockMarketClientImpl implements StockMarketClient {
 
-    private final Sinks.Many<StockPriceDto> sink;
+    private final Sinks.Many<StockPrice> sink;
 
     private final WebClient webClient = WebClient.builder()
             .baseUrl("http://localhost:6060/api/v1/stocks")
             .build();
 
     @Override
-    public Flux<StockPriceDto> getStreamStocksPrices(){
+    public Flux<StockPrice> getStreamStocksPrices(){
         log.info("getStreamStocksPrices");
         return this.webClient.get()
                 .uri("/stream-price")
                 .retrieve()
-                .bodyToFlux(StockPriceDto.class)
+                .bodyToFlux(StockPrice.class)
                 .doOnNext(this.sink::tryEmitNext);
     }
 
@@ -98,11 +98,11 @@ public class StockMarketClientImpl implements StockMarketClient {
     }
 
     @Override
-    public Mono<StockPriceDto> getStockPrice(String ticker) {
+    public Mono<StockPrice> getStockPrice(String ticker) {
         return this.webClient.get()
                 .uri("{ticker}/price", ticker)
                 .retrieve()
-                .bodyToMono(StockPriceDto.class);
+                .bodyToMono(StockPrice.class);
     }
 
     @Override

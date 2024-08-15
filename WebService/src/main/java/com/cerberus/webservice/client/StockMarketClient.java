@@ -1,7 +1,7 @@
 package com.cerberus.webservice.client;
 
 import com.cerberus.webservice.dto.StockDto;
-import com.cerberus.webservice.dto.StockPriceDto;
+import com.cerberus.webservice.model.StockPrice;
 import com.cerberus.webservice.model.MarketStatus;
 import com.cerberus.webservice.model.StockRecommendation;
 import reactor.core.publisher.Flux;
@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 public interface StockMarketClient {
 
-    Flux<StockPriceDto> getStreamStocksPrices();
+    Flux<StockPrice> getStreamStocksPrices();
 
     Flux<StockRecommendation> getStockRecommendation(String ticker);
 
@@ -25,7 +25,7 @@ public interface StockMarketClient {
 
     Flux<StockDto> getStocksWithPagination(Integer page, Integer size);
 
-    Mono<StockPriceDto> getStockPrice(String ticker);
+    Mono<StockPrice> getStockPrice(String ticker);
 
     Mono<MarketStatus> getMarketStatus();
 }

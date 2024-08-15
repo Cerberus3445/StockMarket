@@ -1,6 +1,6 @@
 package com.cerberus.webservice.config;
 
-import com.cerberus.webservice.dto.StockPriceDto;
+import com.cerberus.webservice.model.StockPrice;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Sinks;
@@ -9,7 +9,7 @@ import reactor.core.publisher.Sinks;
 public class ApplicationConfig {
 
     @Bean
-    public Sinks.Many<StockPriceDto> sink(){
+    public Sinks.Many<StockPrice> sink(){
         return Sinks.many().replay().limit(1);
     }
 }

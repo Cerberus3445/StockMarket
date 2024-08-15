@@ -1,4 +1,4 @@
-package com.cerberus.webservice.dto;
+package com.cerberus.webservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StockPriceDto {
+public class StockPrice {
 
     private String ticker;
 
