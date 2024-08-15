@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/static/css/stockPillar.css" th:href="@{/css/stockPillar.css}">
     <title>Trading Platform</title>
 </head>
 <body>
@@ -18,66 +18,66 @@
 
 <div class="container-lg">
 
-    <div class="row mt-3">
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-header text-center">
-                    <strong>AAPL</strong>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center" id="AAPL">$100</h5>
-                    <div class="row">
-                        <div class="col" align="left"><a href="#" class="btn btn-success" onclick="trade('AAPL', 'BUY')">Buy</a></div>
-                        <div class="col" align="right"><a href="#" class="btn btn-warning" onclick="trade('AAPL', 'SELL')">Sell</a></div>
+    <div class="container">
+        <div th:each="stock : ${stocks1Pillar}">
+            <div class="row mt-3">
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <strong th:text="${stock.title()}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center" th:id="${stock.ticker()}">$100</h5>
+                            <div class="row">
+                                <div class="col" align="left"><a href="#" class="btn btn-success" onclick="trade('AAPL', 'BUY')">Buy</a></div>
+                                <div class="col" align="right"><a href="#" class="btn btn-warning" onclick="trade('AAPL', 'SELL')">Sell</a></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-header text-center">
-                    <strong>AMZN</strong>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center" id="AMZN">$100</h5>
-                    <div class="row">
-                        <div class="col" align="left"><a href="#" class="btn btn-success" onclick="trade('AMAZON', 'BUY')">Buy</a></div>
-                        <div class="col" align="right"><a href="#" class="btn btn-warning" onclick="trade('AMAZON', 'SELL')">Sell</a></div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-header text-center">
-                    <strong>TEST</strong>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center" id="TEST">$100</h5>
-                    <div class="row">
-                        <div class="col" align="left"><a href="#" class="btn btn-success" onclick="trade('TEST', 'BUY')">Buy</a></div>
-                        <div class="col" align="right"><a href="#" class="btn btn-warning" onclick="trade('TEST', 'SELL')">Sell</a></div>
+        <div class="stocks2Pillar" th:each="stock : ${stocks2Pillar}">
+            <div class="row mt-3">
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <strong th:text="${stock.title()}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center" th:id="${stock.ticker()}">$100</h5>
+                            <div class="row">
+                                <div class="col" align="left"><a href="#" class="btn btn-success" onclick="trade('AAPL', 'BUY')">Buy</a></div>
+                                <div class="col" align="right"><a href="#" class="btn btn-warning" onclick="trade('AAPL', 'SELL')">Sell</a></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-header text-center">
-                    <strong>MICROSOFT</strong>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title text-center" id="MICROSOFT">$100</h5>
-                    <div class="row">
-                        <div class="col" align="left"><a href="#" class="btn btn-success" onclick="trade('MICROSOFT', 'BUY')">Buy</a></div>
-                        <div class="col" align="right"><a href="#" class="btn btn-warning" onclick="trade('MICROSOFT', 'SELL')">Sell</a></div>
+        <div class="stocks2Pillar" th:each="stock : ${stocks3Pillar}">
+            <div class="row mt-3">
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <strong th:text="${stock.title()}"></strong>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center" th:id="${stock.ticker()}">$100</h5>
+                            <div class="row">
+                                <div class="col" align="left"><a href="#" class="btn btn-success" onclick="trade('AAPL', 'BUY')">Buy</a></div>
+                                <div class="col" align="right"><a href="#" class="btn btn-warning" onclick="trade('AAPL', 'SELL')">Sell</a></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
 
@@ -143,7 +143,129 @@
 
         </div>
 
+
     </div>
+
+    <script>
+
+        // get customer id
+        const params = new URLSearchParams(window.location.search);
+        const customerId = params.get('customer');
+        let stockPrices = {};
+        let customerPortfolioValue = {};
+        console.log(customerId);
+
+        // elements
+        const customerProfileNameElement = document.getElementById('customer-profile-name');
+        const customerPortfolioValueElement = document.getElementById('customer-portfolio-value');
+        const customerAvailableBalanceElement = document.getElementById('customer-available-balance');
+        const customerPortfolioContainer = document.getElementById('customer-portfolio').querySelector('tbody');
+        const alerts = document.getElementById('alerts');
+
+        // get price updates
+        const stockPriceUpdates = () => {
+            var source = new EventSource("/api/stocks");
+            source.onmessage = (evt) => {
+                let event = JSON.parse(evt.data);
+                let element = document.getElementById(event.ticker);
+                element.innerText = `$${event.c}`;
+                stockPrices[event.ticker] = event.c;
+                let customerQuantity = document.getElementById(`customer-quantity-${event.ticker}`);
+                if(customerQuantity){
+                    let q = parseInt(customerQuantity.innerText);
+                    let price = q * event.c;
+                    document.getElementById(`customer-value-${event.ticker}`).innerText = `$${c}`;
+                    customerPortfolioValue[event.ticker] = price;
+                    updateCustomerPortfolioDisplayValue();
+                }
+            };
+        };
+
+        // get customer information & portfolio
+        const fetchCustomerInformation = async () => {
+            const response = await fetch(`/customers/${customerId}`);
+            const customer = await response.json();
+            customerProfileNameElement.innerText = customer.name;
+            customerAvailableBalanceElement.innerText = `$${customer.balance}`;
+            while(customerPortfolioContainer.firstChild){
+                customerPortfolioContainer.removeChild(customerPortfolioContainer.firstChild);
+            }
+            customer.holdings.map((holding, index) => getPortfolioRow(holding, index)).forEach((holding) => customerPortfolioContainer.append(holding));
+            customer.holdings.forEach(holding => customerPortfolioValue[holding.ticker] = (holding.quantity * getStockPriceFromCache(holding.ticker)));
+            customerPortfolioValue['BALANCE'] = customer.balance;
+            console.log(customerPortfolioValue);
+            updateCustomerPortfolioDisplayValue();
+        }
+
+        const updateCustomerPortfolioDisplayValue = () => {
+            const sum = Object.values(customerPortfolioValue).reduce((acc, val) => acc + val, 0);
+            if(sum >= 10000){
+                customerPortfolioValueElement.innerHTML = `<p class="text-success">$${sum}</p>`;
+            }else{
+                customerPortfolioValueElement.innerHTML = `<p class="text-danger">$${sum}</p>`;
+            }
+        };
+
+        const getPortfolioRow = (holding, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                            <th scope="row">${index + 1}</th>
+                            <td>${holding.ticker}</td>
+                            <td id="customer-quantity-${holding.ticker}">${holding.quantity}</td>
+                            <td id="customer-value-${holding.ticker}">$${holding.quantity * getStockPriceFromCache(holding.ticker) }</td>
+            `;
+            return tr;
+        }
+
+        const getStockPriceFromCache = (ticker) => {
+            return stockPrices[ticker] ? stockPrices[ticker] : 0;
+        }
+
+        const trade = async (ticker, action) => {
+            const response = await fetch(`/customers/${customerId}/trade`, {
+                method : "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ticker,
+                    action,
+                    quantity: 1
+                })
+            });
+            const data = await response.json();
+            if(response.ok){
+                // we might need updated customer balance & portfolio
+                fetchCustomerInformation();
+            }else{
+                showAlert(data.detail, 'danger');
+            }
+
+        };
+
+        const showAlert = (msg, level) => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <div class="alert alert-${level} alert-dismissible" role="alert">
+                    ${msg}
+                </div>
+            `;
+            alerts.append(div);
+            setTimeout(() => {
+                div.remove();
+            }, 3000);
+        };
+
+        // trigger these functions on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            stockPriceUpdates();
+            fetchCustomerInformation();
+        });
+
+
+
+    </script>
 
 </div>
 <!-- Optional JavaScript; choose one of the two! -->

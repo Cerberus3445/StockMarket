@@ -7,14 +7,11 @@ import com.cerberus.webservice.model.MarketStatus;
 import com.cerberus.webservice.model.StockRecommendation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
-
-import java.util.Map;
 
 @Component
 @Slf4j
@@ -28,10 +25,10 @@ public class StockMarketClientImpl implements StockMarketClient {
             .build();
 
     @Override
-    public Flux<StockPriceDto> getStocksPricesWithPagination(Integer page, Integer size){
-        log.info("getStocksPricesWithPagination page: {}, size: {}", page, size);
+    public Flux<StockPriceDto> getStreamStocksPrices(){
+        log.info("getStreamStocksPrices");
         return this.webClient.get()
-                .uri("/price/page/{page}/size/{size}", page, size)
+                .uri("/stream-price")
                 .retrieve()
                 .bodyToFlux(StockPriceDto.class)
                 .doOnNext(this.sink::tryEmitNext);
@@ -89,6 +86,23 @@ public class StockMarketClientImpl implements StockMarketClient {
                 .uri("/{id}", id)
                 .retrieve()
                 .bodyToMono(Void.class);
+    }
+
+    @Override
+    public Flux<StockDto> getStocksWithPagination(Integer page, Integer size) {
+        log.info("getStocksWithPagination page: {}, size: {}", page, size);
+        return this.webClient.get()
+                .uri("/page/{page}/size/{size}", page, size)
+                .retrieve()
+                .bodyToFlux(StockDto.class);
+    }
+
+    @Override
+    public Mono<StockPriceDto> getStockPrice(String ticker) {
+        return this.webClient.get()
+                .uri("{ticker}/price", ticker)
+                .retrieve()
+                .bodyToMono(StockPriceDto.class);
     }
 
     @Override

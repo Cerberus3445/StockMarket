@@ -14,7 +14,7 @@ import reactor.core.publisher.Flux;
  */
 
 @RestController
-@RequestMapping("/web/stocks")
+@RequestMapping("/api/stocks")
 @RequiredArgsConstructor
 public class StockRestController {
 
@@ -22,6 +22,6 @@ public class StockRestController {
 
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<StockPriceDto> mainPage(){
-        return this.stockMarketClient.getStocksPricesWithPagination(1, 6);
+        return this.stockMarketClient.getStreamStocksPrices();
     }
 }

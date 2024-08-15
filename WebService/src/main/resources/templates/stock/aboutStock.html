@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="${stockPrice.getTicker()}"></h1>
+<h1>Самая высокая цена за день</h1>
+<h1 th:text="${stockPrice.getH()()}"></h1>
+<h1>Цена закрытия</h1>
+<h1 th:text="${stockPrice.getC()()}"></h1>
+<h1>Самая низкая цена за день</h1>
+<h1 th:text="${stockPrice.getL()()}"></h1>
+<h1>Цена открытия</h1>
+<h1 th:text="${stockPrice.getO()()}"></h1>
+<h1>Цена открытия</h1>
+<h1 th:text="${stockPrice.getPc()()}"></h1>
+
+<div th:each="stockRecommendation : ${stockRecommendationList}">
+    <h2>Покупать</h2>
+    <h2 th:text="${stockRecommendation.getBuy()}"></h2>
+    <h2>Продавать</h2>
+    <h2 th:text="${stockRecommendation.getSell()}"></h2>
+    <h2>Держать</h2>
+    <h2 th:text="${stockRecommendation.getHold()}"></h2>
+    <h2>Активно покупать</h2>
+    <h2 th:text="${stockRecommendation.getStrongBuy()}"></h2>
+    <h2>Активно продавать</h2>
+    <h2 th:text="${stockRecommendation.getStrongSell()}"></h2>
+    <h2>Период</h2>
+    <h2 th:text="${stockRecommendation.getPeriod()}"></h2>
+</div>
+</body>
+</html>

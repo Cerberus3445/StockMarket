@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 public interface StockMarketClient {
 
-    Flux<StockPriceDto> getStocksPricesWithPagination(Integer page, Integer size);
+    Flux<StockPriceDto> getStreamStocksPrices();
 
     Flux<StockRecommendation> getStockRecommendation(String ticker);
 
@@ -22,6 +22,10 @@ public interface StockMarketClient {
     Mono<StockDto> updateStock(Integer id, Mono<StockDto> stockDto);
 
     Mono<Void> deleteStock(Integer id);
+
+    Flux<StockDto> getStocksWithPagination(Integer page, Integer size);
+
+    Mono<StockPriceDto> getStockPrice(String ticker);
 
     Mono<MarketStatus> getMarketStatus();
 }

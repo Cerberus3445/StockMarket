@@ -10,7 +10,7 @@ public interface StockClient {
 
     Mono<StockPrice> getPrice(String ticker);
 
-    Flux<StockPrice> getPriceWithPagination(Integer page, Integer size);
+    Flux<StockPrice> getStreamPrice();
 
     Flux<StockRecommendation> getRecommendation(String ticker);
 

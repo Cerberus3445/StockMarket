@@ -52,8 +52,8 @@ public class StockClientImpl implements StockClient {
     }
 
     @Override
-    public Flux<StockPrice> getPriceWithPagination(Integer page, Integer size) {
-        return this.stockService.getWithPagination(page, size)
+    public Flux<StockPrice> getStreamPrice() {
+        return this.stockService.getAll()
                 .flatMap(stockDto -> getPrice(stockDto.ticker()))
                 .as(stockPriceDtoFlux -> sink.asFlux());
     }
