@@ -37,8 +37,8 @@ public class StockController {
     }
 
     @GetMapping("/page/{page}/size/{size}")
-    public Flux<StockDto> getStocksWithPagination(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
-        return this.stockService.getWithPagination(page, size);
+    public Flux<StockPrice> getStocksWithPagination(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
+        return this.stockClient.getWithPagination(page, size);
     }
 
     @GetMapping("/{id}")

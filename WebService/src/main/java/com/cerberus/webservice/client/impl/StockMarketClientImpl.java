@@ -89,18 +89,18 @@ public class StockMarketClientImpl implements StockMarketClient {
     }
 
     @Override
-    public Flux<StockDto> getStocksWithPagination(Integer page, Integer size) {
+    public Flux<StockPrice> getStocksWithPagination(Integer page, Integer size) {
         log.info("getStocksWithPagination page: {}, size: {}", page, size);
         return this.webClient.get()
                 .uri("/page/{page}/size/{size}", page, size)
                 .retrieve()
-                .bodyToFlux(StockDto.class);
+                .bodyToFlux(StockPrice.class);
     }
 
     @Override
     public Mono<StockPrice> getStockPrice(String ticker) {
         return this.webClient.get()
-                .uri("{ticker}/price", ticker)
+                .uri("/{ticker}/price", ticker)
                 .retrieve()
                 .bodyToMono(StockPrice.class);
     }

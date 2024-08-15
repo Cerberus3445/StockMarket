@@ -1,6 +1,7 @@
 package com.cerberus.stockmarket.client.impl;
 
 import com.cerberus.stockmarket.client.StockClient;
+import com.cerberus.stockmarket.dto.StockDto;
 import com.cerberus.stockmarket.model.MarketStatus;
 import com.cerberus.stockmarket.model.StockPrice;
 import com.cerberus.stockmarket.model.StockRecommendation;
@@ -87,6 +88,12 @@ public class StockClientImpl implements StockClient {
                 .uri(uriBuilder -> uriBuilder.path(path).query(query).build(map))
                 .retrieve()
                 .bodyToMono(MarketStatus.class);
+    }
+
+    @Override
+    public Flux<StockPrice> getWithPagination(Integer page, Integer size) {
+        return this.stockService.getWithPagination(page, size)
+                .flatMap(stockDto -> getPrice(stockDto.ticker()));
     }
 
     private Function<StockPrice, StockPrice> forTestStock(){ //для акции TEST

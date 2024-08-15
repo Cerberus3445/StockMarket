@@ -1,0 +1,16 @@
+.stock-recommendation{
+    border-style: solid;
+    display: inline-block;
+}
+
+.buy{
+    color: green;
+}
+
+.sell{
+    color: red;
+}
+
+.hold{
+    color: gray;
+}

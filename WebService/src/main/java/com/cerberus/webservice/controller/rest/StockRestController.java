@@ -24,4 +24,9 @@ public class StockRestController {
     public Flux<StockPrice> mainPage(){
         return this.stockMarketClient.getStreamStocksPrices();
     }
+
+    @GetMapping(value = "/stock", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<StockPrice> stock(){
+        return this.stockMarketClient.getStreamStocksPrices();
+    }
 }

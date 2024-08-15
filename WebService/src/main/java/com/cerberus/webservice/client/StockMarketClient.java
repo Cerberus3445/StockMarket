@@ -23,7 +23,7 @@ public interface StockMarketClient {
 
     Mono<Void> deleteStock(Integer id);
 
-    Flux<StockDto> getStocksWithPagination(Integer page, Integer size);
+    Flux<StockPrice> getStocksWithPagination(Integer page, Integer size);
 
     Mono<StockPrice> getStockPrice(String ticker);
 

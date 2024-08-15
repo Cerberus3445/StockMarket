@@ -2,34 +2,197 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Информация об Ации</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/css/stock.css" th:href="@{/css/stock.css}">
 </head>
 <body>
-<h1 th:text="${stockPrice.getTicker()}"></h1>
-<h1>Самая высокая цена за день</h1>
-<h1 th:text="${stockPrice.getH()()}"></h1>
-<h1>Цена закрытия</h1>
-<h1 th:text="${stockPrice.getC()()}"></h1>
-<h1>Самая низкая цена за день</h1>
-<h1 th:text="${stockPrice.getL()()}"></h1>
-<h1>Цена открытия</h1>
-<h1 th:text="${stockPrice.getO()()}"></h1>
-<h1>Цена открытия</h1>
-<h1 th:text="${stockPrice.getPc()()}"></h1>
+<div class="stock-price-info" th:each="price : ${stockPrice}">
+    <h1 th:text="${price.getTicker().toString()}"></h1>
+    <h1>Самая высокая цена за день</h1>
+    <h1 th:text="${price.getH().toString()}"></h1>
+    <h1>Цена закрытия</h1>
+    <h1 th:text="${price.getC().toString()}"></h1>
+    <h1>Самая низкая цена за день</h1>
+    <h1 th:text="${price.getL().toString()}"></h1>
+    <h1>Цена открытия</h1>
+    <h1 th:text="${price.getO().toString()}"></h1>
+    <h1>Цена открытия</h1>
+    <h1 th:text="${price.getPc().toString()}"></h1>
+</div>
 
-<div th:each="stockRecommendation : ${stockRecommendationList}">
-    <h2>Покупать</h2>
+<div class="stock-recommendation" th:each="stockRecommendation : ${stockRecommendationList}">
+    <h2 class="buy">Покупать</h2>
     <h2 th:text="${stockRecommendation.getBuy()}"></h2>
-    <h2>Продавать</h2>
+    <h2 class="sell">Продавать</h2>
     <h2 th:text="${stockRecommendation.getSell()}"></h2>
-    <h2>Держать</h2>
+    <h2 class="hold">Держать</h2>
     <h2 th:text="${stockRecommendation.getHold()}"></h2>
-    <h2>Активно покупать</h2>
+    <h2 class="buy">Активно покупать</h2>
     <h2 th:text="${stockRecommendation.getStrongBuy()}"></h2>
-    <h2>Активно продавать</h2>
+    <h2 class="sell">Активно продавать</h2>
     <h2 th:text="${stockRecommendation.getStrongSell()}"></h2>
     <h2>Период</h2>
+    <hr style="color: white">
     <h2 th:text="${stockRecommendation.getPeriod()}"></h2>
 </div>
+
+<div>
+    <div class="row mt-3">
+
+        <div class="col-sm-9">
+
+            <div class="card w-100">
+                <div class="card-header">
+                    Portfolio
+                </div>
+                <div class="card-body">
+
+                    <table class="table" id="customer-portfolio">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Current Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        <div id="alerts" class="mt-3">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    // get customer id
+    const params = new URLSearchParams(window.location.search);
+    const customerId = params.get('customer');
+    let stockPrices = {};
+    let customerPortfolioValue = {};
+    console.log(customerId);
+
+    // elements
+    const customerProfileNameElement = document.getElementById('customer-profile-name');
+    const customerPortfolioValueElement = document.getElementById('customer-portfolio-value');
+    const customerAvailableBalanceElement = document.getElementById('customer-available-balance');
+    const customerPortfolioContainer = document.getElementById('customer-portfolio').querySelector('tbody');
+    const alerts = document.getElementById('alerts');
+
+    // get price updates
+    const stockPriceUpdates = () => {
+        var source = new EventSource("/api/stocks");
+        source.onmessage = (evt) => {
+            let event = JSON.parse(evt.data);
+            let element = document.getElementById(event.ticker);
+            element.innerText = `$${event.c}`;
+            stockPrices[event.ticker] = event.c;
+            let customerQuantity = document.getElementById(`customer-quantity-${event.ticker}`);
+            if(customerQuantity){
+                let q = parseInt(customerQuantity.innerText);
+                let price = q * event.c;
+                document.getElementById(`customer-value-${event.ticker}`).innerText = `$${c}`;
+                customerPortfolioValue[event.ticker] = price;
+                updateCustomerPortfolioDisplayValue();
+            }
+        };
+    };
+
+    // get customer information & portfolio
+    const fetchCustomerInformation = async () => {
+        const response = await fetch(`/customers/${customerId}`);
+        const customer = await response.json();
+        customerProfileNameElement.innerText = customer.name;
+        customerAvailableBalanceElement.innerText = `$${customer.balance}`;
+        while(customerPortfolioContainer.firstChild){
+            customerPortfolioContainer.removeChild(customerPortfolioContainer.firstChild);
+        }
+        customer.holdings.map((holding, index) => getPortfolioRow(holding, index)).forEach((holding) => customerPortfolioContainer.append(holding));
+        customer.holdings.forEach(holding => customerPortfolioValue[holding.ticker] = (holding.quantity * getStockPriceFromCache(holding.ticker)));
+        customerPortfolioValue['BALANCE'] = customer.balance;
+        console.log(customerPortfolioValue);
+        updateCustomerPortfolioDisplayValue();
+    }
+
+    const updateCustomerPortfolioDisplayValue = () => {
+        const sum = Object.values(customerPortfolioValue).reduce((acc, val) => acc + val, 0);
+        if(sum >= 10000){
+            customerPortfolioValueElement.innerHTML = `<p class="text-success">$${sum}</p>`;
+        }else{
+            customerPortfolioValueElement.innerHTML = `<p class="text-danger">$${sum}</p>`;
+        }
+    };
+
+    const getPortfolioRow = (holding, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+                            <th scope="row">${index + 1}</th>
+                            <td>${holding.ticker}</td>
+                            <td id="customer-quantity-${holding.ticker}">${holding.quantity}</td>
+                            <td id="customer-value-${holding.ticker}">$${holding.quantity * getStockPriceFromCache(holding.ticker) }</td>
+            `;
+        return tr;
+    }
+
+    const getStockPriceFromCache = (ticker) => {
+        return stockPrices[ticker] ? stockPrices[ticker] : 0;
+    }
+
+    const trade = async (ticker, action) => {
+        const response = await fetch(`/customers/${customerId}/trade`, {
+            method : "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ticker,
+                action,
+                quantity: 1
+            })
+        });
+        const data = await response.json();
+        if(response.ok){
+            // we might need updated customer balance & portfolio
+            fetchCustomerInformation();
+        }else{
+            showAlert(data.detail, 'danger');
+        }
+
+    };
+
+    const showAlert = (msg, level) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+                <div class="alert alert-${level} alert-dismissible" role="alert">
+                    ${msg}
+                </div>
+            `;
+        alerts.append(div);
+        setTimeout(() => {
+            div.remove();
+        }, 3000);
+    };
+
+    // trigger these functions on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        stockPriceUpdates();
+        fetchCustomerInformation();
+    });
+
+
+
+</script>
 </body>
 </html>

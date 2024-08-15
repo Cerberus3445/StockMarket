@@ -15,24 +15,16 @@ public class StockController {
 
     private final StockMarketClient stockMarketClient;
 
-    @GetMapping("/stockmarket/main")
-    public String redirect(){
-        return "redirect:/stockmarket/main";
-    }
-
     @GetMapping("/main")
     public String mainPage(Model model){
         model.addAttribute("stocks1Pillar", this.stockMarketClient.getStocksWithPagination(1, 5));
-        model.addAttribute("stocks2Pillar", this.stockMarketClient.getStocksWithPagination(2, 5));
-        model.addAttribute("stocks3Pillar", this.stockMarketClient.getStocksWithPagination(3, 5));
-        return "stock/index";
+        return "stock/main";
     }
 
     @GetMapping("/{ticker}")
     public String getStock(Model model, @PathVariable("ticker") String ticker){
         model.addAttribute("stockRecommendationList", this.stockMarketClient.getStockRecommendation(ticker));
-        this.stockMarketClient.getStockPrice(ticker)
-                .doOnNext(stockPriceDto -> model.addAttribute("stockPrice", stockPriceDto));
+        model.addAttribute("stockPrice", this.stockMarketClient.getStockPrice(ticker));
         return "stock/aboutStock";
     }
 }
