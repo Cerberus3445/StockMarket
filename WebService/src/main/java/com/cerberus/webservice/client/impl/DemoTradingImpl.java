@@ -2,6 +2,8 @@ package com.cerberus.webservice.client.impl;
 
 import com.cerberus.webservice.client.DemoTrading;
 import com.cerberus.webservice.dto.PortfolioItemDto;
+import com.cerberus.webservice.dto.TradeRequest;
+import com.cerberus.webservice.dto.TradeResponse;
 import com.cerberus.webservice.dto.UserBalanceDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,14 @@ public class DemoTradingImpl implements DemoTrading {
     private final WebClient webClient = WebClient.builder()
             .baseUrl("http://localhost:5050/api/v1/trade")
             .build();
+
+    @Override
+    public Mono<TradeResponse> trade(Mono<TradeRequest> tradeRequest) {
+        return this.webClient.post()
+                .body(tradeRequest, TradeRequest.class)
+                .retrieve()
+                .bodyToMono(TradeResponse.class);
+    }
 
     @Override
     public Mono<UserBalanceDto> getBalance(Integer userId) {
@@ -44,7 +54,7 @@ public class DemoTradingImpl implements DemoTrading {
     }
 
     @Override
-    public Flux<PortfolioItemDto> getUserHistory(Integer userId) {
+    public Flux<PortfolioItemDto> getTradeHistory(Integer userId) {
         return this.webClient.get()
                 .uri("/user/{userId}/history", userId)
                 .retrieve()
