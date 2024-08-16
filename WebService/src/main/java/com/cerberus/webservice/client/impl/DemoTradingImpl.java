@@ -23,6 +23,7 @@ public class DemoTradingImpl implements DemoTrading {
 
     @Override
     public Mono<TradeResponse> trade(Mono<TradeRequest> tradeRequest) {
+        tradeRequest.doOnNext(tradeRequest1 -> log.info("trade {}", tradeRequest1));
         return this.webClient.post()
                 .body(tradeRequest, TradeRequest.class)
                 .retrieve()
@@ -31,6 +32,7 @@ public class DemoTradingImpl implements DemoTrading {
 
     @Override
     public Mono<UserBalanceDto> getBalance(Integer userId) {
+        log.info("getBalance {}", userId);
         return this.webClient.get()
                 .uri("/user/{userId}", userId)
                 .retrieve()
@@ -39,6 +41,7 @@ public class DemoTradingImpl implements DemoTrading {
 
     @Override
     public Mono<UserBalanceDto> createBalance(Integer userId) {
+        log.info("createBalance {}", userId);
         return this.webClient.post()
                 .uri("/user/{userId}", userId)
                 .retrieve()
@@ -47,6 +50,7 @@ public class DemoTradingImpl implements DemoTrading {
 
     @Override
     public Mono<UserBalanceDto> increaseBalance(Integer userId, Double sum) {
+        log.info("increaseBalance {} {}", userId, sum);
         return this.webClient.post()
                 .uri("/user/{userId}/increase?sum={sum}", userId, sum)
                 .retrieve()
@@ -55,6 +59,7 @@ public class DemoTradingImpl implements DemoTrading {
 
     @Override
     public Flux<PortfolioItemDto> getTradeHistory(Integer userId) {
+        log.info("getTradeHistory {}", userId);
         return this.webClient.get()
                 .uri("/user/{userId}/history", userId)
                 .retrieve()
