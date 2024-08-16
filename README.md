@@ -3,4 +3,4 @@
 
 Стэк(будет дополняться): Spring Webflux, R2DBC, Mysql, Docker, Thymeleaf(возможно, что в будущем будет заменён JS), общение микросервисов будет происходить через JWT
 
-![схема биржи акций.png](..%2F..%2FDownloads%2F%F1%F5%E5%EC%E0%20%E1%E8%F0%E6%E8%20%E0%EA%F6%E8%E9.png)
+![схема биржи акций](https://github.com/user-attachments/assets/a86a4322-4903-4663-8fbd-ff422c131259)
