@@ -1,7 +1,7 @@
 
 create table if not exists user_balance(
     id int auto_increment primary key ,
-    user_id int ,
+    user_id int unique ,
     balance double,
     foreign key (user_id) references user (id)
 );
@@ -12,5 +12,5 @@ create table if not exists portfolio_item (
                                 ticker VARCHAR(10),
                                 quantity int,
                                 purchase_price double,
-                                foreign key (customer_id) references user(id)
+                                foreign key (user_id) references user(id)
 );
