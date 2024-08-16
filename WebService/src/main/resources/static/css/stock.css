@@ -14,3 +14,17 @@
 .hold{
     color: gray;
 }
+
+.chart{
+    margin-top: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+}
+
+.profile-info{
+    border-style: solid;
+    width: 370px;
+}

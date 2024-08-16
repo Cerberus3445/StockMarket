@@ -17,14 +17,23 @@ public class StockController {
 
     @GetMapping("/main")
     public String mainPage(Model model){
-        model.addAttribute("stocks1Pillar", this.stockMarketClient.getStocksWithPagination(1, 5));
+        model.addAttribute("stocks1Pillar", this.stockMarketClient.getStocksWithPagination(1, 10));
         return "stock/main";
+    }
+
+    @GetMapping("/trading")
+    public String tradingPage(Model model){
+        return "stock/trading";
     }
 
     @GetMapping("/{ticker}")
     public String getStock(Model model, @PathVariable("ticker") String ticker){
-        model.addAttribute("stockRecommendationList", this.stockMarketClient.getStockRecommendation(ticker));
-        model.addAttribute("stockPrice", this.stockMarketClient.getStockPrice(ticker));
+        if(ticker.equalsIgnoreCase("TEST")){ //для акции TEST нет рекомендаций
+            model.addAttribute("stockPrice", this.stockMarketClient.getStockPrice(ticker));
+        } else {
+            model.addAttribute("stockRecommendationList", this.stockMarketClient.getStockRecommendation(ticker));
+            model.addAttribute("stockPrice", this.stockMarketClient.getStockPrice(ticker));
+        }
         return "stock/aboutStock";
     }
 }

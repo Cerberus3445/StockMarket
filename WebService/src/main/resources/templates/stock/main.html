@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crypto Bazaar</title>
+  <title>Биржа Акций</title>
 
   <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -171,7 +171,7 @@
                     </div>
                   </td>
                     <div class="card-body">
-                        <td class="card-title text-center" th:id="${stock.getTicker()}">$100</td>
+                        <td class="card-title text-center" th:id="${stock.getTicker()}"></td>
                     </div>
 
                   <td class="table-data last-update green" th:text="${stock.getD()}"></td>
@@ -353,8 +353,6 @@
 
   <script>
       'use strict';
-
-
 
       /**
        * add event on element
