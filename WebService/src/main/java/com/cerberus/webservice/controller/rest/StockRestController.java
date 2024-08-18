@@ -31,8 +31,8 @@ public class StockRestController {
         return this.stockMarketClient.getStreamStocksPrices();
     }
 
-    @GetMapping("/userbalance/{id}")
-    public Mono<UserBalanceDto> mainPage(@PathVariable("id") Integer id){
+    @GetMapping("/userbalance/{userId}")
+    public Mono<UserBalanceDto> mainPage(@PathVariable("userId") Integer id){
         return this.demoTrading.getBalance(id);
     }
 }

@@ -11,6 +11,7 @@ create table if not exists portfolio_item (
                                 user_id int,
                                 ticker VARCHAR(10),
                                 quantity int,
+                                trade_action varchar(10),
                                 purchase_price double,
                                 foreign key (user_id) references user(id)
 );

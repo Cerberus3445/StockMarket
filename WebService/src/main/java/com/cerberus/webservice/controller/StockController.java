@@ -21,11 +21,6 @@ public class StockController {
         return "stock/main";
     }
 
-    @GetMapping("/trading")
-    public String tradingPage(Model model){
-        return "stock/trading";
-    }
-
     @GetMapping("/{ticker}")
     public String getStock(Model model, @PathVariable("ticker") String ticker){
         if(ticker.equalsIgnoreCase("TEST")){ //для акции TEST нет рекомендаций
