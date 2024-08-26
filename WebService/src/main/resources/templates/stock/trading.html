@@ -53,6 +53,22 @@
 
 
   <main>
+      <section class="home" aria-label="home" data-section>
+          <div class="container">
+
+              <div class="home-content">
+
+                  <h1 class="h1 home-title">Ваш баланс: </h1>
+                  <h1 class="h1 home-title" th:text="${userBalance.balance()}"> </h1>
+
+                  <p class="home-text">
+                      Цены акций, новости компаний, торговый календарь, демо торговля
+                  </p>
+                  <p></p>
+              </div>
+
+          </div>
+      </section>
     <article>
 
       <section class="home" aria-label="home" data-section>
@@ -90,7 +106,7 @@
 
           <div class="market-tab">
 
-              <form th:method="POST" th:action="@{/stockmarket/{userId}/trade(userId=${})}" th:object="${TradeRequest}">
+              <form method="post" th:action="@{/stockmarket/{userId}/trade(userId=${userBalance.userId()})}" th:object="${tradeRequest}">
                   <input type="text" th:field="*{ticker}" class="form__input" id="ticker" placeholder="Тикер" required="" />
                   <label for="ticker" class="form__label">Тикер Акции</label>
                   <input type="text" th:field="*{quantity}" class="form__input" id="quantity" placeholder="Количество" required="" />

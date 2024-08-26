@@ -1,25 +1,22 @@
 package com.cerberus.userservice.model;
 
+import com.cerberus.userservice.filter.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
+@Table("tokens")
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("users")
-public class User {
+public class AuthToken {
 
-    @Id
     private Long id;
 
-    private String username;
+    private Long userId;
 
-    private String email;
+    private String value;
 
-    private Role role;
-
-    private String password;
+    private Category category;
 }

@@ -4,7 +4,7 @@ import reactor.core.publisher.Mono;
 
 public class ApplicationExceptions {
 
-    public static <T>Mono<T> userNotFound(Integer id){
+    public static <T>Mono<T> userNotFound(Long id){
         return Mono.error(new UserNotFoundException(id));
     }
 

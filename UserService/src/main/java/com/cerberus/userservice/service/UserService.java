@@ -5,13 +5,13 @@ import reactor.core.publisher.Mono;
 
 public interface UserService {
 
-    Mono<UserDto> getById(Integer id);
+    Mono<UserDto> getById(Long id);
 
-    Mono<UserDto> getByEmail(String email);
+    Mono<UserDto> getByUsernameOrEmail(String usernameOrEmail);
 
-    Mono<UserDto> create(Mono<UserDto> dtoMono);
+    Mono<Void> create(Mono<UserDto> dtoMono);
 
-    Mono<UserDto> update(Integer id, Mono<UserDto> dtoMono);
+    Mono<UserDto> update(Long id, Mono<UserDto> dtoMono);
 
-    Mono<Boolean> delete(Integer id);
+    Mono<Boolean> delete(Long id);
 }

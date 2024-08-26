@@ -4,6 +4,7 @@ import com.cerberus.webservice.client.DemoTrading;
 import com.cerberus.webservice.client.StockMarketClient;
 import com.cerberus.webservice.dto.TradeRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import reactor.core.publisher.Mono;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/stockmarket/{userId}")
 public class DemoTradingController {
 
@@ -20,15 +22,12 @@ public class DemoTradingController {
 
     @GetMapping("/trading")
     public Mono<String> tradingPage(@PathVariable("userId") Integer userId, Model model){
-//        model.addAttribute("balance", this.demoTrading.getBalance(userId));
-//        model.addAttribute("tradeHistory", this.demoTrading.getTradeHistory(userId));
-//        return "stock/trading"
         return this.demoTrading.getTradeHistory(userId)
                 .collectList()
                 .doOnNext(portfolioItemDtoList -> model.addAttribute("tradeHistory", portfolioItemDtoList))
                 .flatMap(portfolioItemDto -> this.demoTrading.getBalance(userId))
                 .doOnNext(userBalanceDto -> model.addAttribute("userBalance", userBalanceDto))
-                .doOnNext(i -> model.addAttribute("TradeRequest", new TradeRequest()))
+                .doOnNext(i -> model.addAttribute("tradeRequest", new TradeRequest()))
                 .then()
                 .thenReturn("stock/trading");
     }
@@ -36,13 +35,13 @@ public class DemoTradingController {
     @PostMapping("/createBalance")
     public Mono<String> createBalance(@PathVariable("userId") Integer userId){
         return this.demoTrading.createBalance(userId).
-                thenReturn("stock/trading");
+                thenReturn("redirect:http://localhost:9095/stockmarket/%d/trade".formatted(userId));
     }
 
     @PostMapping("/increaseBalance")
     public Mono<String> increaseBalance(@PathVariable("userId") Integer userId, @ModelAttribute("sum") Double sum){
         return this.demoTrading.increaseBalance(userId, sum)
-                .thenReturn("stock/trading");
+                .thenReturn("redirect:http://localhost:9095/stockmarket/%d/trade".formatted(userId));
     }
 
     @PostMapping("/trade")
@@ -50,6 +49,6 @@ public class DemoTradingController {
         return this.stockMarketClient.getStockPrice(tradeRequest.getTicker())
                 .map(stockPrice -> new TradeRequest(tradeRequest.getTicker(), tradeRequest.getTradeAction(),
                         tradeRequest.getQuantity(), stockPrice.getC(), userId))
-                .thenReturn("stock/trading");
+                .thenReturn("redirect:http://localhost:9095/stockmarket/%d/trade".formatted(userId));
     }
 }

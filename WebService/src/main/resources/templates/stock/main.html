@@ -71,11 +71,6 @@
 
           </div>
 
-          <figure class="home-banner">
-              <!-- сюда картинку -->
-            <img src="./assets/images/main-page-side.png" width="570" height="448" alt="home banner" class="w-100">
-          </figure>
-
         </div>
       </section>
 
@@ -150,7 +145,7 @@
 
               <tbody class="table-body">
 
-                <tr class="table-row" th:each="stock : ${stocks1Pillar}">
+                <tr class="table-row" th:each="stock : ${stockPricesList}">
 
                   <td class="table-data">
                     <button class="add-to-fav" aria-label="Add to favourite" data-add-to-fav>
