@@ -7,9 +7,9 @@ public interface UserClient {
 
     Mono<UserDto> getById(Integer id);
 
-    Mono<UserDto> getByEmail(String email);
+    Mono<UserDto> getByUsernameOrEmail(String email);
 
-    Mono<UserDto> create(Mono<UserDto> dtoMono);
+    Mono<UserDto> register(Mono<UserDto> dtoMono);
 
     Mono<UserDto> update(Integer id, Mono<UserDto> dtoMono);
 

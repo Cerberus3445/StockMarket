@@ -3,7 +3,6 @@ package com.cerberus.userservice.filter;
 import com.cerberus.userservice.dto.AuthTokenDto;
 import com.cerberus.userservice.service.AuthTokenService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -13,7 +12,6 @@ import reactor.core.publisher.Mono;
 
 @Order(1) //первый в списке фильтров
 @Component
-@Slf4j
 @RequiredArgsConstructor
 public class AuthenticationWebFilter implements WebFilter {
 

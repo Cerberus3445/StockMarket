@@ -27,18 +27,19 @@ public class UserClientImpl implements UserClient {
     }
 
     @Override
-    public Mono<UserDto> getByEmail(String email) {
-        log.info("getByEmail {}", email);
+    public Mono<UserDto> getByUsernameOrEmail(String login) {
+        log.info("getByEmail {}", login);
         return this.webClient.get()
-                .uri("/email/{email}", email)
+                .uri("/login/{usernameOrEmail}", login)
                 .retrieve()
                 .bodyToMono(UserDto.class);
     }
 
     @Override
-    public Mono<UserDto> create(Mono<UserDto> dtoMono) {
+    public Mono<UserDto> register(Mono<UserDto> dtoMono) {
         log.info("create");
         return this.webClient.post()
+                .uri("/register")
                 .body(dtoMono, UserDto.class)
                 .retrieve()
                 .bodyToMono(UserDto.class);

@@ -30,7 +30,7 @@ public class UserClientTest {
 
     @Test
     public void getByEmail(){
-        this.userClient.getByEmail("stockUser@gmail.com")
+        this.userClient.getByUsernameOrEmail("stockUser@gmail.com")
                 .doOnNext(userDto -> log.info("получено: {}", userDto))
                 .as(StepVerifier::create)
                 .assertNext(userDto -> Assertions.assertEquals("stockUser@gmail.com", userDto.getEmail()))

@@ -19,12 +19,12 @@ public class UserController {
         return this.userService.getById(id);
     }
 
-    @GetMapping("/find/{usernameOrEmail}")
-    public Mono<UserDto> getByEmail(@PathVariable("usernameOrEmail") String email){
+    @GetMapping("/login/{usernameOrEmail}")
+    public Mono<UserDto> login(@PathVariable("usernameOrEmail") String email){
         return this.userService.getByUsernameOrEmail(email);
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public Mono<Void> create(@RequestBody Mono<UserDto> dtoMono){
         return this.userService.create(dtoMono);
     }

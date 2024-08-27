@@ -31,7 +31,7 @@ public class AuthorizationWebFilter implements WebFilter {
 
     private Mono<Void> unauthenticatedUser(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getPath().toString();
-        if(path.equals("/api/v1/users")){
+        if(path.equals("/api/v1/users/register") || path.equals("/api/v1/users/login")){
             return chain.filter(exchange);
         } else {
             return Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN));
@@ -48,8 +48,8 @@ public class AuthorizationWebFilter implements WebFilter {
     }
 
     private Mono<Void> standardUser(ServerWebExchange exchange, WebFilterChain chain) {
-        var isGet = HttpMethod.GET.equals(exchange.getRequest().getMethod());
-        if(isGet){
+        String path = exchange.getRequest().getPath().toString();
+        if(!path.startsWith("/api/v1/admin")){
             return chain.filter(exchange);
         } else {
             return Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN));
