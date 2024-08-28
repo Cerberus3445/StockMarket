@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("portfolio_item")
+@Table("portfolio_items")
 public class PortfolioItem {
 
     @Id

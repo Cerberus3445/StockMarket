@@ -1,21 +1,22 @@
 package com.cerberus.demotrading.model;
 
+import com.cerberus.demotrading.filter.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
+@Table("tokens")
 @AllArgsConstructor
 @NoArgsConstructor
-@Table("user_balances")
-public class UserBalance {
+public class AuthToken {
 
-    @Id
-    private Integer id;
+    private Long id;
 
-    private Integer userId;
+    private Long userId;
 
-    private Double balance;
+    private String value;
+
+    private Category category;
 }
