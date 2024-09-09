@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -17,9 +18,12 @@ class StockMarketClientTest {
     @Autowired
     private StockMarketClient stockMarketClient;
 
+    @Value("${token}")
+    private String token;
+
     @Test
     public void getStockRecommendation(){
-        this.stockMarketClient.getStockRecommendation("AMZN")
+        this.stockMarketClient.getStockRecommendation("AMZN", token)
                 .doOnNext(stockRecommendation -> log.info("получено: {}", stockRecommendation))
                 .as(StepVerifier::create)
                 .expectNextCount(4)
@@ -29,7 +33,7 @@ class StockMarketClientTest {
 
     @Test
     public void getStock(){
-        this.stockMarketClient.getStock("AMZN")
+        this.stockMarketClient.getStock("AMZN", token)
                 .doOnNext(stockDto -> log.info("получено: {}", stockDto))
                 .as(StepVerifier::create)
                 .assertNext(stockDto -> Assertions.assertEquals("Amazon.com Inc", stockDto.title()))
@@ -42,7 +46,7 @@ class StockMarketClientTest {
         this.stockMarketClient.getAllStock()
                 .doOnNext(stockDto -> log.info("получено: {}", stockDto))
                 .as(StepVerifier::create)
-                .expectNextCount(9)
+                .expectNextCount(11)
                 .expectComplete()
                 .verify();
     }
@@ -72,7 +76,7 @@ class StockMarketClientTest {
     @Test
     public void delete(){
         this.stockMarketClient.deleteStock(10)
-                .then(Mono.defer(() -> this.stockMarketClient.getStock("SBER")))
+                .then(Mono.defer(() -> this.stockMarketClient.getStock("SBER", token)))
                 .as(StepVerifier::create)
                 .expectError()
                 .verify();

@@ -15,4 +15,6 @@ public interface AuthTokenRepository extends ReactiveCrudRepository<AuthToken, L
     Mono<Boolean> deleteWithUserId(Long id);
 
     Mono<AuthToken> findByValue(String token);
+
+    Mono<AuthToken> findByUserId(Long userId);
 }

@@ -11,4 +11,6 @@ public interface AuthTokenService {
     Mono<AuthTokenDto> getByValue(String token);
 
     Mono<Void> delete(Long userId);
+
+    Mono<AuthTokenDto> getByUserId(Long userId);
 }

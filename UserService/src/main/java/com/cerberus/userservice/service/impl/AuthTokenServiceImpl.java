@@ -48,6 +48,12 @@ public class AuthTokenServiceImpl implements AuthTokenService {
                 .then();
     }
 
+    @Override
+    public Mono<AuthTokenDto> getByUserId(Long userId) {
+        return this.authTokenRepository.findByUserId(userId)
+                .map(EntityDtoMapper::toDto);
+    }
+
     private AuthToken generateToken(Long userId, Category category){
         SecureRandom secureRandom = new SecureRandom();
         Base64.Encoder base64Encoder = Base64.getUrlEncoder();

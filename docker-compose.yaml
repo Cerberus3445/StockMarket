@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  mysql:
+  mysql-db:
     image: mysql
     restart: always
     environment:
@@ -11,3 +11,65 @@ services:
       MYSQL_DATABASE: stock_market
     ports:
       - "3306:3306"
+    networks:
+      app-network:
+  stock:
+    image: cerberus3445/stockservice:0.0.1-SNAPSHOT
+    environment:
+      SPRING_R2DBC_URL: r2dbc:mysql://mysql-db:3306/stock_market
+      SPRING_R2DBC_USERNAME: mysql
+      SPRING_R2DBC_PASSWORD: password
+    ports:
+      - "6060:6060"
+    depends_on:
+      - mysql-db
+    networks:
+      app-network:
+  user:
+    image: cerberus3445/userservice:0.0.1-SNAPSHOT
+    environment:
+      SPRING_R2DBC_URL: r2dbc:mysql://mysql-db:3306/stock_market
+      SPRING_R2DBC_USERNAME: mysql
+      SPRING_R2DBC_PASSWORD: password
+    ports:
+      - "7070:7070"
+    depends_on:
+      - mysql-db
+    networks:
+      app-network:
+  web:
+    image: cerberus3445/webservice:0.0.1-SNAPSHOT
+    ports:
+      - "9095:9095"
+    depends_on:
+      - stock
+    networks:
+      app-network:
+  demotradingweb:
+    image: cerberus3445/demotradingweb:0.0.1-SNAPSHOT
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/stock_market
+      SPRING_DATASOURCE_USERNAME: mysql
+      SPRING_DATASOURCE_PASSWORD: password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+      - user
+      - demotrading
+    networks:
+      app-network:
+  demotrading:
+    image: cerberus3445/demotrading:0.0.1-SNAPSHOT
+    environment:
+      SPRING_R2DBC_URL: r2dbc:mysql://mysql-db:3306/stock_market
+      SPRING_R2DBC_USERNAME: mysql
+      SPRING_R2DBC_PASSWORD: password
+    ports:
+      - "5050:5050"
+    depends_on:
+      - mysql-db
+    networks:
+      app-network:
+networks:
+  app-network:

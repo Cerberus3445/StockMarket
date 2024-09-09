@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<UserDto> getByUsernameOrEmail(String usernameOrEmail) {
-        return null;
+        return this.userRepository.findByNameOrEmail(usernameOrEmail, usernameOrEmail)
+                .map(EntityDtoMapper::toDto);
     }
 
     @Override

@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="DemoTradingWeb" />
         <module name="demo-trading" />
         <module name="user-service" />
         <module name="stock-market" />
@@ -19,6 +20,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="DemoTradingWeb" options="-parameters" />
       <module name="demo-trading" options="-parameters" />
       <module name="stock-market" options="-parameters" />
       <module name="stock-market (2)" options="-parameters" />

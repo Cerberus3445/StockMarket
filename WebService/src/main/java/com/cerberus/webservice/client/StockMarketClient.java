@@ -9,11 +9,11 @@ import reactor.core.publisher.Mono;
 
 public interface StockMarketClient {
 
-    Flux<StockPrice> getStreamStocksPrices();
+    Flux<StockPrice> getStreamStocksPrices(String token);
 
-    Flux<StockRecommendation> getStockRecommendation(String ticker);
+    Flux<StockRecommendation> getStockRecommendation(String ticker, String token);
 
-    Mono<StockDto> getStock(String ticker);
+    Mono<StockDto> getStock(String ticker, String token);
 
     Flux<StockDto> getAllStock();
 
@@ -23,9 +23,9 @@ public interface StockMarketClient {
 
     Mono<Void> deleteStock(Integer id);
 
-    Flux<StockPrice> getStocksWithPagination(Integer page, Integer size);
+    Flux<StockPrice> getStocksWithPagination(Integer page, Integer size, String token);
 
-    Mono<StockPrice> getStockPrice(String ticker);
+    Mono<StockPrice> getStockPrice(String ticker, String token);
 
     Mono<MarketStatus> getMarketStatus();
 }

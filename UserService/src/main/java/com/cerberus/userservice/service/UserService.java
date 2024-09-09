@@ -1,5 +1,6 @@
 package com.cerberus.userservice.service;
 
+import com.cerberus.userservice.dto.AuthTokenDto;
 import com.cerberus.userservice.dto.UserDto;
 import reactor.core.publisher.Mono;
 

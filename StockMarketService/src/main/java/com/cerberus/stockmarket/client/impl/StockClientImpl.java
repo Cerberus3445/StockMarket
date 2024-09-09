@@ -9,6 +9,7 @@ import com.cerberus.stockmarket.service.StockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -92,6 +93,7 @@ public class StockClientImpl implements StockClient {
 
     @Override
     public Flux<StockPrice> getWithPagination(Integer page, Integer size) {
+        log.info("getWithPagination {}, {}", page, size);
         return this.stockService.getWithPagination(page, size)
                 .flatMap(stockDto -> getPrice(stockDto.ticker()));
     }

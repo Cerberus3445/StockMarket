@@ -39,7 +39,7 @@ class UserTest {
 
     @Test
     public void nameNotValid(){
-        var mono = Mono.just(new User(null, "", "pochta@gmail.com", Role.ROLE_USER));
+        var mono = Mono.just(new User(null, "", "pochta@gmail.com", Role.ROLE_USER, "1234"));
         request(Method.POST, HttpStatus.BAD_REQUEST, mono)
                 .jsonPath("$.title").isEqualTo("Валидация не пройдена")
                 .jsonPath("$.detail").isEqualTo("Имя пользователя не должно быть пустым");
@@ -47,7 +47,7 @@ class UserTest {
 
     @Test
     public void emailNotValid(){
-        var mono = Mono.just(new User(null, "dasasffd", "pochtagmail.com", Role.ROLE_USER));
+        var mono = Mono.just(new User(null, "dasasffd", "pochtagmail.com", Role.ROLE_USER, "1234"));
         request(Method.POST, HttpStatus.BAD_REQUEST, mono)
                 .jsonPath("$.title").isEqualTo("Валидация не пройдена")
                 .jsonPath("$.detail").isEqualTo("Email не должен быть пустьм и должен быть валидным");
@@ -55,13 +55,13 @@ class UserTest {
 
     @Test
     public void create(){
-        var mono = Mono.just(new User(null, "dasasffd", "pochta@gmail.com", Role.ROLE_USER));
+        var mono = Mono.just(new User(null, "dasasffd", "pochta@gmail.com", Role.ROLE_USER, "1234"));
         request(Method.POST, HttpStatus.OK, mono);
     }
 
     @Test
     public void update(){
-        var mono = Mono.just(new User(null, "user", "user12@gmail.com", Role.ROLE_USER));
+        var mono = Mono.just(new User(null, "user", "user12@gmail.com", Role.ROLE_USER, "1234"));
         update(7, HttpStatus.OK, mono)
                 .jsonPath("$.id").isEqualTo(7)
                 .jsonPath("$.name").isEqualTo("user")

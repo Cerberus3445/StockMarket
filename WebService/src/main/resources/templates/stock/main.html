@@ -159,7 +159,7 @@
                   <td class="table-data">
                     <div class="wrapper">
                       <h3>
-                        <a href="#" class="coin-name"> <span th:text="${stock.getTicker()}" class="span"></span></a>
+                        <a th:href="@{/stockmarket/{ticker}(ticker=${stock.getTicker()})}" class="coin-name"> <span th:text="${stock.getTicker()}" class="span"></span></a>
                       </h3>
                     </div>
                   </td>

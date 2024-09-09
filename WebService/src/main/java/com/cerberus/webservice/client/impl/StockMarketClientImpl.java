@@ -21,33 +21,36 @@ public class StockMarketClientImpl implements StockMarketClient {
     private final Sinks.Many<StockPrice> sink;
 
     private final WebClient webClient = WebClient.builder()
-            .baseUrl("http://localhost:6060/api/v1/stocks")
+            .baseUrl("http://stock:6060/api/v1/stocks")
             .build();
 
     @Override
-    public Flux<StockPrice> getStreamStocksPrices(){
+    public Flux<StockPrice> getStreamStocksPrices(String token){
         log.info("getStreamStocksPrices");
         return this.webClient.get()
                 .uri("/stream-price")
+                .header("Auth-token", token)
                 .retrieve()
                 .bodyToFlux(StockPrice.class)
                 .doOnNext(this.sink::tryEmitNext);
     }
 
     @Override
-    public Flux<StockRecommendation> getStockRecommendation(String ticker) {
+    public Flux<StockRecommendation> getStockRecommendation(String ticker, String token) {
         log.info("getStockRecommendation {}", ticker);
         return this.webClient.get()
                 .uri("/ticker/{ticker}/recommendation", ticker)
+                .header("Auth-token", token)
                 .retrieve()
                 .bodyToFlux(StockRecommendation.class);
     }
 
     @Override
-    public Mono<StockDto> getStock(String ticker) {
+    public Mono<StockDto> getStock(String ticker, String token) {
         log.info("getStock {}", ticker);
         return this.webClient.get()
                 .uri("/ticker/{ticker}", ticker)
+                .header("Auth-token", token)
                 .retrieve()
                 .bodyToMono(StockDto.class);
     }
@@ -89,18 +92,20 @@ public class StockMarketClientImpl implements StockMarketClient {
     }
 
     @Override
-    public Flux<StockPrice> getStocksWithPagination(Integer page, Integer size) {
+    public Flux<StockPrice> getStocksWithPagination(Integer page, Integer size, String token) {
         log.info("getStocksWithPagination page: {}, size: {}", page, size);
         return this.webClient.get()
                 .uri("/page/{page}/size/{size}", page, size)
+                .header("Auth-token", token)
                 .retrieve()
                 .bodyToFlux(StockPrice.class);
     }
 
     @Override
-    public Mono<StockPrice> getStockPrice(String ticker) {
+    public Mono<StockPrice> getStockPrice(String ticker, String token) {
         return this.webClient.get()
                 .uri("/{ticker}/price", ticker)
+                .header("Auth-token", token)
                 .retrieve()
                 .bodyToMono(StockPrice.class);
     }

@@ -57,11 +57,21 @@ public class PortfolioItemServiceImpl implements PortfolioItemService {
     private Mono<TradeResponse> sell(TradeRequest tradeRequest) {
         return this.userBalanceRepository.findByUserId(tradeRequest.userId())
                 .switchIfEmpty(ApplicationExceptions.userNotFound(tradeRequest.userId()))
-                .flatMap(i -> this.portfolioItemRepository
-                        .findFirstByUserIdAndTickerAndQuantityAndTradeAction(tradeRequest.userId(), tradeRequest.ticker(), tradeRequest.quantity(), TradeAction.BUY))
+                .flatMap(i -> this.portfolioItemRepository.findPortfolioItem(tradeRequest.userId(),
+                        tradeRequest.ticker(),TradeAction.BUY, tradeRequest.quantity()))
+                .filter(portfolioItem -> tradeRequest.quantity() <= portfolioItem.getQuantity())
                 .switchIfEmpty(ApplicationExceptions.invalidTradeRequest("Ошибка продажи: проверьте количество акций или тикер акции"))
-                .doOnNext(portfolioItem -> portfolioItem.setTradeAction(TradeAction.SELL))
-                .flatMap(this.portfolioItemRepository::save)
+                .flatMap(portfolioItem -> {
+                   if(portfolioItem.getQuantity() == tradeRequest.quantity()){
+                       portfolioItem.setTradeAction(TradeAction.SELL);
+                       return this.portfolioItemRepository.save(portfolioItem);
+                   } else {
+                       portfolioItem.setQuantity(portfolioItem.getQuantity() - tradeRequest.quantity());
+                      return this.portfolioItemRepository.save(portfolioItem);
+                   }
+                })
+                .flatMap(portfolioItem -> this.portfolioItemRepository.save(new PortfolioItem(null, tradeRequest.userId(), tradeRequest.ticker(),
+                        tradeRequest.tradeAction(), tradeRequest.quantity(), tradeRequest.totalPrice())))
                 .flatMap(i -> this.userBalanceRepository.findByUserId(tradeRequest.userId()))
                 .doOnNext(userBalance -> userBalance.setBalance(userBalance.getBalance() + tradeRequest.totalPrice()))
                 .flatMap(this.userBalanceRepository::save)

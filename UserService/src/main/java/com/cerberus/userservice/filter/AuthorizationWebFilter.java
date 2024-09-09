@@ -31,7 +31,7 @@ public class AuthorizationWebFilter implements WebFilter {
 
     private Mono<Void> unauthenticatedUser(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getPath().toString();
-        if(path.equals("/api/v1/users/register") || path.equals("/api/v1/users/login")){
+        if(path.equals("/api/v1/users/register") || path.startsWith("/api/v1/users/login") || path.startsWith("/api/v1/users/token")){
             return chain.filter(exchange);
         } else {
             return Mono.fromRunnable(() -> exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN));

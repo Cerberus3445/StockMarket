@@ -17,7 +17,7 @@ public class RequestValidator {
     }
 
     private static Predicate<UserDto> hasName(){
-        return dto -> !dto.getUsername().isEmpty();
+        return dto -> !dto.getName().isEmpty();
     }
 
     private static Predicate<UserDto> hasValidEmail() {

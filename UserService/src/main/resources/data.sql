@@ -14,3 +14,6 @@ create table if not exists tokens(
     category varchar(10) not null ,
     foreign key (user_id) references users(id) on delete set null
 );
+
+insert ignore into  users(id, name, email, role, password) VALUE (1, 'admin', 'admin@gmail.com', 'ROLE_ADMIN', '1234') ;
+insert ignore into tokens(id, user_id, value, category) VALUE (1, 1, 'EQJ_cmx9lPuVoS-vrLhE_r5LJa345tg9', 'PRIME');

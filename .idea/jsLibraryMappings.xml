@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$/DemoTradingWeb" libraries="{@docsearch}" />
     <file url="file://$PROJECT_DIR$/WebService" libraries="{embed-widget-advanced-chart, embed-widget-mini-symbol-overview, embed-widget-symbol-overview, ionicons}" />
   </component>
 </project>

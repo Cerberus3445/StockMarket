@@ -7,19 +7,14 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/../DemoTrading/pom.xml" />
-        <option value="$PROJECT_DIR$/../StockMarket/pom.xml" />
-        <option value="$PROJECT_DIR$/StockMarket/pom.xml" />
-        <option value="$PROJECT_DIR$/UserService/pom.xml" />
-        <option value="$PROJECT_DIR$/StockMarketService/pom.xml" />
-        <option value="$PROJECT_DIR$/WebService/pom.xml" />
         <option value="$PROJECT_DIR$/DemoTrading/pom.xml" />
+        <option value="$PROJECT_DIR$/StockMarketService/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/pom.xml" />
+        <option value="$PROJECT_DIR$/WebService/pom.xml" />
+        <option value="$PROJECT_DIR$/DemoTradingWeb/pom.xml" />
       </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/../StockMarket/pom.xml" />
-      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK">
