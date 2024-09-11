@@ -21,7 +21,7 @@ public class StockMarketClientImpl implements StockMarketClient {
     private final Sinks.Many<StockPrice> sink;
 
     private final WebClient webClient = WebClient.builder()
-            .baseUrl("http://stock:6060/api/v1/stocks")
+            .baseUrl("http://localhost:6060/api/v1/stocks")
             .build();
 
     @Override

@@ -31,4 +31,9 @@ public class StockRestController {
         return this.stockMarketClient.getStreamStocksPrices(token);
     }
 
+    @Scheduled(fixedDelay = 6500)
+    private void updatePrices(){
+        this.stockMarketClient.getStocksWithPagination(1, 10, token)
+                .subscribe();
+    }
 }
