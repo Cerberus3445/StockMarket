@@ -1,6 +1,6 @@
 Биржа акций с микросервисной архитектурой.
 Функции: получение реальных цен всех акций американской биржи, новости акций, торговый календарь, блог аналитиков, демо-торговля.
 
-Стэк: Spring Webflux, R2DBC, Mysql, Docker, Thymeleaf(+ JS), общение микросервисов будет происходить через API-key.
+Стэк: Spring Webflux, R2DBC, Mysql, Docker, Thymeleaf(+ JS), общение микросервисов происходит через API-key.
 
 ![image](https://github.com/user-attachments/assets/67ebd525-7f5a-4a73-b6e5-af61fc066981)
