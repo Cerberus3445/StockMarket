@@ -67,11 +67,10 @@ public class PortfolioItemServiceImpl implements PortfolioItemService {
                        return this.portfolioItemRepository.save(portfolioItem);
                    } else {
                        portfolioItem.setQuantity(portfolioItem.getQuantity() - tradeRequest.quantity());
-                      return this.portfolioItemRepository.save(portfolioItem);
+                      return this.portfolioItemRepository.save(portfolioItem).flatMap(pr -> this.portfolioItemRepository.save(new PortfolioItem(null, tradeRequest.userId(), tradeRequest.ticker(),
+                              tradeRequest.tradeAction(), tradeRequest.quantity(), tradeRequest.totalPrice())));
                    }
                 })
-                .flatMap(portfolioItem -> this.portfolioItemRepository.save(new PortfolioItem(null, tradeRequest.userId(), tradeRequest.ticker(),
-                        tradeRequest.tradeAction(), tradeRequest.quantity(), tradeRequest.totalPrice())))
                 .flatMap(i -> this.userBalanceRepository.findByUserId(tradeRequest.userId()))
                 .doOnNext(userBalance -> userBalance.setBalance(userBalance.getBalance() + tradeRequest.totalPrice()))
                 .flatMap(this.userBalanceRepository::save)

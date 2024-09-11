@@ -20,5 +20,4 @@ public interface PortfolioItemRepository extends ReactiveCrudRepository<Portfoli
     @Query("select * from portfolio_items where user_id = :userId and trade_action = :tradeAction and ticker = :ticker and quantity >= :quantity limit 1;")
     Mono<PortfolioItem> findPortfolioItem(Integer userId, String ticker, TradeAction tradeAction, Integer quantity);
 
-
 }
